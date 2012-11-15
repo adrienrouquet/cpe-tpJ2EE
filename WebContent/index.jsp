@@ -17,7 +17,7 @@
 			%>  
 			<jsp:include page="<%= routerBean.getURL() %>" />  
 			<% 
-				blabla} 
+				} 
 			%>  
 		</div>
 	</body>
