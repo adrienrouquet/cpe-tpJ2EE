@@ -31,7 +31,7 @@ public class DBHandler{
 			return _query.executeQuery(query);
 
 		}catch (Exception e) {
-			System.out.println("Error in executeQueryRS:" + e.getMessage());
+			System.err.println("Error in executeQueryRS:" + e.getMessage());
 			return null;
 		}
 	}
@@ -48,7 +48,7 @@ public class DBHandler{
 			return true;
 
 		}catch (Exception e) {
-			System.out.println("Error in executeQuery:" + e.getMessage());
+			System.err.println("Error in executeQuery:" + e.getMessage());
 			return false;
 		}
 		
@@ -60,7 +60,7 @@ public class DBHandler{
 			_conn.close();
 			return true;
 		}catch (Exception e) {
-			System.out.println("Error in closeConn:" + e.getMessage());
+			System.err.println("Error in closeConn:" + e.getMessage());
 			return false;
 		}
 		
