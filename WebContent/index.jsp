@@ -4,21 +4,32 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Mon magasin de serviettes</title>
-		<jsp:useBean id="userBean" class="servlet.UserBean" scope="application" />
+		<title>Les serviettes Souples, votre magasin de serviettes préféré!</title>
 		<jsp:useBean id="routerBean" class="servlet.RouterBean" scope="application" />
 	</head>
 	<body>
-		<h1>Les serviettes Souples, votre magasin de serviettes préféré!</h1>
-		<div>
+		<% 
+			if( routerBean.getError() != "")
+			{
+		%>  
+			<div class="error">
+		<%
+			routerBean.getError();
+		 %>
+			</div>
+		 
+		<% 
+			}
+		%>	
+		<div class="body">
 			<% 
-				if( routerBean.getURL() != "")  
+				if( routerBean.getUrl() != "")  
 				{
 			%>  
-			<jsp:include page="<%= routerBean.getURL() %>" />  
+				<jsp:include page="<%= routerBean.getUrl() %>" />
 			<% 
-				blabla} 
-			%>  
+				}
+			%>
 		</div>
 	</body>
 </html>
