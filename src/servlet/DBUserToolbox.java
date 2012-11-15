@@ -2,24 +2,33 @@ package servlet;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public abstract class DBUserToolbox extends DBToolbox
+public class DBUserToolbox extends DBToolbox
 {
-	private DBUserToolbox()
+	public DBUserToolbox()
 	{
 		super();
 		_dbName = "tpJ2EE_LocalBase";
 		_dbHandler = new DBHandler(_dbName);
 	}
 	
-	public static boolean isUserValid(String login, String password)
+	public boolean connect()
+	{
+		boolean isConnected = false;
+		
+		return isConnected;
+	}
+	
+	public boolean isUserValid(String login, String password)
 	{
 		String query = "SELECT * FROM users WHERE login='" + login + "' AND password='" + password + "';";
 		
 		return hasResult(query);
 	}
 
-	public static boolean isAdmin(int id)
+	public boolean isAdmin(int id)
 	{
 		boolean result = false;
 		String query = "SELECT rightTypeId FROM users WHERE id='" + id + "';";
@@ -46,12 +55,12 @@ public abstract class DBUserToolbox extends DBToolbox
 		return result;
 	}
 	
-	public static ResultSet getRecord(int id)
+	public ResultSet getRecord(int id)
 	{
-		ResultSet result = null;
 		String query = "SELECT * FROM users WHERE id='" + id + "';";
+		ResultSet result = getResult(query);
 		
-		if (hasResult(query))
+		if (hasResult(result))
 			{
 				result = getResult(query);
 			}
@@ -59,14 +68,12 @@ public abstract class DBUserToolbox extends DBToolbox
 		return result;
 	}
 	
-	private static boolean hasResult(String query)
+	private boolean hasResult(ResultSet rs)
 	{
 		boolean result = false;
 		
 		try
 		{
-			ResultSet rs = getResult(query);
-			
 			if (rs != null)
 			{
 				while(rs.next())
@@ -83,9 +90,24 @@ public abstract class DBUserToolbox extends DBToolbox
 		return result;
 	}
 	
-	private static ResultSet getResult(String query)
+	private ResultSet getResult(String query)
 	{
-		return _dbHandler.executeQueryRS(query);
+		ResultSet result = _dbHandler.executeQueryRS(query);
+		_dbHandler.closeConn();
+		
+		return result;
 	}
+	
+	public ResultSet getUsers()
+	{
+		ResultSet result = null;
+		
+		return result;
+	}
+	//{
+	//	
+	//		String query = "SELECT u.id as 'userId', u.name as 'userName', u.login, u.password, u.rightTypeId as 'rightTypeId', rt.name as 'rightTypeName' from users as u inner join rightTypes as rt on u.rightTypeId = rt.id";
+	//
+	//}
 	
 }

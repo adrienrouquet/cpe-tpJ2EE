@@ -2,16 +2,12 @@ package servlet;
 
 public abstract class DBToolbox
 {
-	protected static String _dbName = "";
-	protected static DBHandler _dbHandler = null;
+	protected String _dbName = "";
+	protected DBHandler _dbHandler = null;
 	
 	protected DBToolbox()
 	{
 		
 	}
-	
-	protected static void commonMethod()
-	{
-	}
-	
+		
 }
