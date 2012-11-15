@@ -33,19 +33,6 @@ public class OnlineStore extends HttpServlet {
 		_router.routing(request, response);
 //		out.println(">>>>END");
 
-//		ServletContext _context = getServletContext();
-//        if(_context.getAttribute("myCounterBean") == null)
-//        {
-//        	mcb = new MyCounterBean();
-//        	mcb.incPageCount();
-//        	_context.setAttribute("myCounterBean", mcb);
-//        	
-//        }
-//        else
-//        {
-//        	mcb = (MyCounterBean) _context.getAttribute("myCounterBean");
-//        	mcb.incPageCount();
-//        }
 	}
 
 	/**
