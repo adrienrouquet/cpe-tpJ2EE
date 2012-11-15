@@ -14,11 +14,9 @@ public class DBUserToolbox extends DBToolbox
 		_dbHandler = new DBHandler(_dbName);
 	}
 	
-	public boolean connect()
+	public void closeConn()
 	{
-		boolean isConnected = false;
-		
-		return isConnected;
+		_dbHandler.closeConn();
 	}
 	
 	public boolean isUserValid(String login, String password)
@@ -93,7 +91,7 @@ public class DBUserToolbox extends DBToolbox
 	private ResultSet getResult(String query)
 	{
 		ResultSet result = _dbHandler.executeQueryRS(query);
-		_dbHandler.closeConn();
+		
 		
 		return result;
 	}

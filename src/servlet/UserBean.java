@@ -71,17 +71,32 @@ public class UserBean
 	
     public boolean isUserValid()
     {
-    	return 	DBUserToolbox.isUserValid(_login,_password);
+    	boolean result = false;
+    	DBUserToolbox utb = new DBUserToolbox();
+    	
+    	result = utb.isUserValid(_login,_password);
+    	
+    	utb.closeConn();
+    	
+    	return result;	
     }
     
     public boolean isUserAdmin()
     {
-    	return DBUserToolbox.isAdmin(this._id);
+    	boolean result = false;
+    	DBUserToolbox utb = new DBUserToolbox();
+    	
+    	result = utb.isAdmin(this._id);
+    	
+    	utb.closeConn();
+    	
+    	return result;
     }
     
     public void getUserRecord()
     {
-    	ResultSet rs = DBUserToolbox.getRecord(this._id);
+    	DBUserToolbox utb = new DBUserToolbox();
+    	ResultSet rs = utb.getRecord(this._id);
     	
     	try
     	{
@@ -97,6 +112,10 @@ public class UserBean
     	{
     		System.err.println("Error in getUserRecord:" + e.getMessage());
     	}	
+    	finally
+    	{
+    		utb.closeConn();
+    	}
     }
     
     public void createUserRecord()
