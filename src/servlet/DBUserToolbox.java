@@ -46,20 +46,24 @@ public abstract class DBUserToolbox extends DBToolbox
 		return result;
 	}
 	
-	public static boolean getRecord(int id)
+	public static ResultSet getRecord(int id)
 	{
-		boolean success = false;
+		ResultSet result = null;
+		String query = "SELECT * FROM users WHERE id='" + id + "';";
 		
 		try
 		{
-			
+			if (hasResult(query))
+			{
+				result = getResult(query);
+			}
 		}
 		catch (SQLException e)
 		{
 			System.err.println("Error in getRecord:" + e.getMessage());
 		}
 		
-		return success;
+		return result;
 	}
 	
 	private static boolean hasResult(String query)

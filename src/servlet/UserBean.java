@@ -1,15 +1,7 @@
 package servlet;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 public class UserBean
 {
-	private static final long serialVersionUID = 1L;
-     
 	private int _id = 0;
 	private String _name = "";
 	private String _login = "";
@@ -66,17 +58,17 @@ public class UserBean
         setRightTypeId(rightTypeId);
     }
 	
-    public boolean isUserValid(String login, String password)
+    public boolean isUserValid()
     {
-    	return 	DBUserToolbox.isUserValid(login,password);
+    	return 	DBUserToolbox.isUserValid(_login,_password);
     }
     
-    public boolean isUserAdmin(int id)
+    public boolean isUserAdmin()
     {
-    	return DBUserToolbox.isAdmin(id);
+    	return DBUserToolbox.isAdmin(this._id);
     }
     
-    public void getUserRecord(int id)
+    public void getUserRecord()
     {
     	
     }
@@ -84,11 +76,11 @@ public class UserBean
     {
     	
     }
-    public void updateUserRecord(int id)
+    public void updateUserRecord()
     {
     	
     }
-    public void deleteUserRecord(int id)
+    public void deleteUserRecord()
     {
     	
     }
