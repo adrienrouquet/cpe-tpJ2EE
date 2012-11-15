@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class OnlineStore extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+    private RouterBean _router = new RouterBean();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -29,8 +29,10 @@ public class OnlineStore extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
-		out.println("It works !!");
-		
+//		out.println("It works !!");
+		_router.routing(request, response);
+//		out.println(">>>>END");
+
 //		ServletContext _context = getServletContext();
 //        if(_context.getAttribute("myCounterBean") == null)
 //        {
