@@ -42,7 +42,7 @@ public class DBHandler{
 		{
 			Class.forName("com.mysql.jdbc.Driver");
 			
-			_conn = java.sql.DriverManager.getConnection("jdbc:mysql://172.16.64.130:3306/"+_dbName, _connectionProps);
+			_conn = java.sql.DriverManager.getConnection("jdbc:mysql://82.67.37.180:3306/"+_dbName, _connectionProps);
 			_query = _conn.createStatement();
 			_query.executeUpdate(query);
 			return true;
