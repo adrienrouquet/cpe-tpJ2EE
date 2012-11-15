@@ -7,6 +7,6 @@
 	<br>Password:<br><input type="password" name="password">
 	<input type="hidden" name="action" value="login">
 	<br><input type="submit" value="Login">
-	</form>
+	</form> 
 	<br><a href="OnlineStore?action=subscribe">Subscribe</a>
 </div>

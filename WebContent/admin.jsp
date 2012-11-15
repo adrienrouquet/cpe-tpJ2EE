@@ -19,7 +19,6 @@ Users:
 </tr>
 <%
 	ArrayList List = userBean.getUsers();
-
 %>
 </table>
 </div>
