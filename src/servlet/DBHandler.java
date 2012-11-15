@@ -1,6 +1,7 @@
 package servlet;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 
 
@@ -18,16 +19,21 @@ public class DBHandler{
 		_connectionProps = new Properties();
 	    _connectionProps.put("user", "tpJ2EE");
 	    _connectionProps.put("password", "tpJ2EEPass");
+	    
+	    try {
+	    	Class.forName("com.mysql.jdbc.Driver");
+			_conn = java.sql.DriverManager.getConnection("jdbc:mysql://172.16.64.130:3306/"+_dbName, _connectionProps);
+		} catch (Exception e) {
+			System.err.println("Error in DBHandler constructor:" + e.getMessage());
+		}
+			    
 	}
 	
 	public ResultSet executeQueryRS(String query)
 	{
 		try
 		{
-			Class.forName("com.mysql.jdbc.Driver");
-			
-			_conn = java.sql.DriverManager.getConnection("jdbc:mysql://172.16.64.130:3306/"+_dbName, _connectionProps);
-			_query = _conn.createStatement();
+			_query = _conn.createStatement();	
 			return _query.executeQuery(query);
 
 		}catch (Exception e) {
@@ -40,9 +46,6 @@ public class DBHandler{
 	{
 		try
 		{
-			Class.forName("com.mysql.jdbc.Driver");
-			
-			_conn = java.sql.DriverManager.getConnection("jdbc:mysql://82.67.37.180:3306/"+_dbName, _connectionProps);
 			_query = _conn.createStatement();
 			_query.executeUpdate(query);
 			return true;

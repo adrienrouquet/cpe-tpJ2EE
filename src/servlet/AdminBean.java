@@ -1,9 +1,11 @@
 package servlet;
 
+import java.sql.ResultSet;
+
 public class AdminBean
 {
 	
-	public ArrayList getUsers()
+	public ResultSet getUsers()
     {
 		return DBUserToolbox.getUsers();		
     }

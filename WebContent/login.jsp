@@ -7,6 +7,7 @@
 	<br>Password:<br><input type="password" name="password">
 	<input type="hidden" name="action" value="login">
 	<br><input type="submit" value="Login">
+	<br><a href="" onclick="this.form.element('action').value='subscribe';this.form.submit();">Subscribe</a>
 	</form> 
-	<br><a href="OnlineStore?action=subscribe">Subscribe</a>
+	
 </div>
