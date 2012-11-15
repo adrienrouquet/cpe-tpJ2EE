@@ -46,6 +46,22 @@ public abstract class DBUserToolbox extends DBToolbox
 		return result;
 	}
 	
+	public static boolean getRecord(int id)
+	{
+		boolean success = false;
+		
+		try
+		{
+			
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Error in getRecord:" + e.getMessage());
+		}
+		
+		return success;
+	}
+	
 	private static boolean hasResult(String query)
 	{
 		boolean result = false;

@@ -76,4 +76,21 @@ public class UserBean
     	return DBUserToolbox.isAdmin(id);
     }
     
+    public void getUserRecord(int id)
+    {
+    	
+    }
+    public void createUserRecord()
+    {
+    	
+    }
+    public void updateUserRecord(int id)
+    {
+    	
+    }
+    public void deleteUserRecord(int id)
+    {
+    	
+    }
+    
 }
