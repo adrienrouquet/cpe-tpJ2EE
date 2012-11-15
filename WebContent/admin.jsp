@@ -18,7 +18,9 @@ Users:
 	<td colspan="2">Action</td>
 </tr>
 <%
-	ArrayList List = userBean.getUsers();
+	ArrayList users = new ArrayList();
+	users = userBean.getUsers();
+	
 %>
 </table>
 </div>
