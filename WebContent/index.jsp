@@ -12,12 +12,12 @@
 		<h1>Les serviettes Souples, votre magasin de serviettes préféré!</h1>
 		<div>
 			<% 
-				if( routerBean.getURL() != "")  
+				if( routerBean.getUrl() != "")  
 				{
 			%>  
-			<jsp:include page="<%= routerBean.getURL() %>" />  
+			<jsp:include page="<%= routerBean.getUrl() %>" />  
 			<% 
-				} 
+				}
 			%>  
 		</div>
 	</body>
