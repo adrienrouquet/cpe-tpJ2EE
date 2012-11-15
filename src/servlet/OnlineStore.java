@@ -27,12 +27,10 @@ public class OnlineStore extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();
-//		out.println("It works !!");
+		ServletContext context = getServletContext();
+		context.setAttribute("routerBean", this._router);
+		
 		_router.routing(request, response);
-//		out.println(">>>>END");
-
 	}
 
 	/**

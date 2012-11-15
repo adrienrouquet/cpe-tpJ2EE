@@ -29,8 +29,14 @@ public class RouterBean {
 	}
 	
 	public void routing(HttpServletRequest request, HttpServletResponse response) {
-		RequestDispatcher dispatch = request.getRequestDispatcher("/index.jsp");
 		
+		// On regarde si on est connecté: Si non=>login.jsp, si oui=>logon.jsp
+		if(request.getSession(false) == null || request.getSession(false).getAttribute("connected") == null)
+			this._url = "/login.jsp";
+		else
+			this._url = "/logon.jsp";
+		
+		RequestDispatcher dispatch = request.getRequestDispatcher("/index.jsp");
 		try {
 			dispatch.forward(request, response);
 		} catch (ServletException e) {
