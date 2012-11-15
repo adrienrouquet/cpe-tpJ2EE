@@ -8,12 +8,25 @@
 		<jsp:useBean id="routerBean" class="servlet.RouterBean" scope="application" />
 	</head>
 	<body>
-		<div>
+		<% 
+			if( routerBean.getError() != "")
+			{
+		%>  
+			<div class="error">
+		<%
+			routerBean.getError();
+		 %>
+			</div>
+		 
+		<% 
+			}
+		%>	
+		<div class="body">
 			<% 
 				if( routerBean.getUrl() != "")  
 				{
 			%>  
-			<jsp:include page="<%= routerBean.getUrl() %>" />  
+				<jsp:include page="<%= routerBean.getUrl() %>" />
 			<% 
 				}
 			%>
