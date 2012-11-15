@@ -66,9 +66,14 @@ public class UserBean
         setRightTypeId(rightTypeId);
     }
 	
-    public boolean checkCredentials (String login, String password)
+    public boolean isUserValid(String login, String password)
     {
     	return 	DBUserToolbox.isUserValid(login,password);
+    }
+    
+    public boolean isUserAdmin(int id)
+    {
+    	return DBUserToolbox.isAdmin(id);
     }
     
 }

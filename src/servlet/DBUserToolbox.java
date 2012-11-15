@@ -14,18 +14,51 @@ public abstract class DBUserToolbox extends DBToolbox
 	
 	public static boolean isUserValid(String login, String password)
 	{
-		boolean isValid = false;
 		String query = "SELECT * FROM users WHERE login='" + login + "' AND password='" + password + "';";
+		
+		return hasResult(query);
+	}
+
+	public static boolean isAdmin(int id)
+	{
+		boolean result = false;
+		String query = "SELECT rightTypeId FROM users WHERE id='" + id + "';";
 		
 		try
 		{
-			ResultSet rs = _dbHandler.executeQueryRS(query);
+			if (hasResult(query))
+			{
+				ResultSet rs = getResult(query);
+				while (rs.next())
+				{
+					if (rs.getString("rightTypeId").equals("1"))
+					{
+						result = true;
+					}
+				}
+			}
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Error in isAdmin:" + e.getMessage());
+		}
+		
+		return result;
+	}
+	
+	private static boolean hasResult(String query)
+	{
+		boolean result = false;
+		
+		try
+		{
+			ResultSet rs = getResult(query);
 			
 			if (rs != null)
 			{
 				while(rs.next())
 				{
-					isValid = true;
+					result = true;
 				}
 			}
 			
@@ -33,15 +66,15 @@ public abstract class DBUserToolbox extends DBToolbox
 		}
 		catch (SQLException e)
 		{
-			System.err.println("Error in isUserValid:" + e.getMessage());
+			System.err.println("Error in hasResult:" + e.getMessage());
 		}
 		
-		return isValid;
+		return result;
 	}
-
-	public static void commonMethod()
+	
+	private static ResultSet getResult(String query)
 	{
-		
+		return _dbHandler.executeQueryRS(query);
 	}
 	
 }
