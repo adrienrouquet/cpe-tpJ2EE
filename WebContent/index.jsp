@@ -7,12 +7,12 @@
 		<title>Les serviettes Souples, votre magasin de serviettes préféré!</title>
 		<jsp:useBean id="routerBean" class="servlet.RouterBean" scope="application" />
 	</head>
-	<body>
+	<body style="background: rgb(230,230,230); text-align: center;">
 		<% 
 			if( routerBean.getError() != "")
 			{
 		%>  
-			<div class="error">
+			<div class="error" style="color:rgb(230,200,200); text-align:center;">
 		<%
 			routerBean.getError();
 		 %>
@@ -21,7 +21,7 @@
 		<% 
 			}
 		%>	
-		<div class="body">
+		<div class="section" style="text-align: center;">
 			<% 
 				if( routerBean.getUrl() != "")  
 				{
