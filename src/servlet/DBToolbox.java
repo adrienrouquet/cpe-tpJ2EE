@@ -7,6 +7,11 @@ public abstract class DBToolbox
 	
 	protected DBToolbox()
 	{
+		
+	}
+	
+	protected static void commonMethod()
+	{
 	}
 	
 }

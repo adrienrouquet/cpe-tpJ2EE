@@ -39,4 +39,9 @@ public abstract class DBUserToolbox extends DBToolbox
 		return isValid;
 	}
 
+	public static void commonMethod()
+	{
+		
+	}
+	
 }
