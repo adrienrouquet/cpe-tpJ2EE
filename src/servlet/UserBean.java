@@ -1,5 +1,8 @@
 package servlet;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class UserBean
 {
 	private int _id = 0;
@@ -7,6 +10,7 @@ public class UserBean
 	private String _login = "";
 	private String _password = "";
 	private int _rightTypeId = 0;
+	private boolean _isConnected = false;
 	
 	public int getId() {
 		return _id;
@@ -43,6 +47,13 @@ public class UserBean
 		this._rightTypeId = rightTypeId;
 	}
 	
+	public boolean getIsConnected() {
+		return _isConnected;
+	}
+	public void setIsConnected(boolean isConnected) {
+		this._isConnected = isConnected;
+	}
+	
     public UserBean()
     {
         super();
@@ -70,8 +81,24 @@ public class UserBean
     
     public void getUserRecord()
     {
+    	ResultSet rs = DBUserToolbox.getRecord(this._id);
     	
+    	try
+    	{
+    		while (rs.next())
+    		{
+    			setName(rs.getString("name"));
+                setLogin(rs.getString("login"));
+                setPassword(rs.getString("password"));
+                setRightTypeId(Integer.parseInt( rs.getString("rightTypeId")));
+    		}
+    	}
+    	catch (SQLException e)
+    	{
+    		System.err.println("Error in getUserRecord:" + e.getMessage());
+    	}	
     }
+    
     public void createUserRecord()
     {
     	
@@ -84,5 +111,6 @@ public class UserBean
     {
     	
     }
+	
     
 }

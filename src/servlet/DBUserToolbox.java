@@ -51,18 +51,11 @@ public abstract class DBUserToolbox extends DBToolbox
 		ResultSet result = null;
 		String query = "SELECT * FROM users WHERE id='" + id + "';";
 		
-		try
-		{
-			if (hasResult(query))
+		if (hasResult(query))
 			{
 				result = getResult(query);
 			}
-		}
-		catch (SQLException e)
-		{
-			System.err.println("Error in getRecord:" + e.getMessage());
-		}
-		
+
 		return result;
 	}
 	
@@ -81,8 +74,6 @@ public abstract class DBUserToolbox extends DBToolbox
 					result = true;
 				}
 			}
-			
-			_dbHandler.closeConn();
 		}
 		catch (SQLException e)
 		{
