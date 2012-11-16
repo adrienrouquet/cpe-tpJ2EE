@@ -111,6 +111,12 @@ public class DBLocalToolbox extends DBToolbox
 		executeQuery(query);
 	}
 	
+	public void updateRecord(int id, String name, String login, String password, int rightTypeId)
+	{
+		String query = "UPDATE users SET name='" + name + "', login='" + login + "', password='" + password + "', rightTypesId='" + rightTypeId + "' WHERE id='" + id + "';";
+		executeQuery(query);
+	}
+	
 	public ResultSet getUsers()
 	{
 		ResultSet result = null; 

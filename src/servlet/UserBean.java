@@ -2,6 +2,7 @@ package servlet;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class UserBean
 {
@@ -162,9 +163,20 @@ public class UserBean
     	ltb.createRecord(this._name, this._login, this._password, this._rightTypeId);
     }
     
+    public void createUserRecord(Map<String, String> userMap)
+    {
+    	setName(userMap.get("userName"));
+    	setLogin(userMap.get("login"));
+    	setPassword(userMap.get("password"));
+    	setRightTypeId(Integer.parseInt(userMap.get("rightTypeId")));
+    	
+    	createUserRecord();
+    }
+    
     public void updateUserRecord()
     {
-    	
+    	DBLocalToolbox ltb = new DBLocalToolbox();
+    	ltb.updateRecord(this._id, this._name, this._login, this._password, this._rightTypeId);
     }
     
     public void deleteUserRecord()
