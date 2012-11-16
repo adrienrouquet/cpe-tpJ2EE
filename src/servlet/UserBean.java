@@ -73,7 +73,8 @@ public class UserBean
         
         setId(id);
     }
-    public UserBean(String name, String password) {
+    public UserBean(String name, String password)
+    {
     	super();
     	
     	setName(name);
@@ -191,6 +192,4 @@ public class UserBean
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	return ltb.deleteRecord(this._id);
     }
-	
-    
 }
