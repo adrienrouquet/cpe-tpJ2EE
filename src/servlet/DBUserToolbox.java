@@ -55,15 +55,17 @@ public class DBUserToolbox extends DBToolbox
 	
 	public ResultSet getRecord(int id)
 	{
+		ResultSet result = null;
+		
 		String query = "SELECT * FROM users WHERE id='" + id + "';";
 		ResultSet rs = getResult(query);
 		
 		if (hasResult(rs))
 			{
-				return rs;
+				result = rs;
 			}
-		return null;
 		
+		return result;
 	}
 	
 	private boolean hasResult(ResultSet rs)
@@ -98,15 +100,15 @@ public class DBUserToolbox extends DBToolbox
 	
 	public ResultSet getUsers()
 	{
-		ResultSet result = null;
-		String query = "SELECT u.id as 'userId', u.name as 'userName', u.login, u.password, u.rightTypeId as 'rightTypeId', rt.name as 'rightTypeName' from users as u inner join rightTypes as rt on u.rightTypeId = rt.id";
+		ResultSet result = null; 
 		
+		String query = "SELECT u.id as 'userId', u.name as 'userName', u.login, u.password, u.rightTypeId as 'rightTypeId', rt.name as 'rightTypeName' from users as u inner join rightTypes as rt on u.rightTypeId = rt.id";
+		ResultSet rs = getResult(query);
+		
+		if (hasResult(rs))
+			{
+				result = rs;
+			}
 		return result;
 	}
-	//{
-	//	
-	//		
-	//
-	//}
-	
 }
