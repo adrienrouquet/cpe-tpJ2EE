@@ -173,6 +173,7 @@ public class UserBean
     		rs.first();
     		do
     		{
+    			setId(Integer.parseInt( rs.getString("id")));
     			setName(rs.getString("name"));
                 setLogin(rs.getString("login"));
                 setPassword(rs.getString("password"));
