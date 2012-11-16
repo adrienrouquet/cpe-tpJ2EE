@@ -79,6 +79,8 @@ public class RouterBean {
 			action = "view";
 		}
 		
+		System.out.println("SWITCHING: " + action);
+		
 		int actionNb = Arrays.binarySearch(this._actions, action);
 		if (actionNb >= 0) {
 			user.setAction(action);
