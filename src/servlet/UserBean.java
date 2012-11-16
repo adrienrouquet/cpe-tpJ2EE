@@ -116,7 +116,19 @@ public class UserBean
     	return result;
     }
     
-    public boolean getUserRecord()
+ 
+    
+   
+    
+    public void createUserMap(Map<String, String> userMap)
+    {
+    	setName(userMap.get("userName"));
+    	setLogin(userMap.get("login"));
+    	setPassword(userMap.get("password"));
+    	setRightTypeId(Integer.parseInt(userMap.get("rightTypeId")));
+    }
+    
+    public boolean getRecord()
     {
     	boolean done = false;
     	DBLocalToolbox ltb = new DBLocalToolbox();
@@ -157,31 +169,22 @@ public class UserBean
     	return done;
     }
     
-    public void createUserRecord()
+    public void addRecord()
     {
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	ltb.createRecord(this._name, this._login, this._password, this._rightTypeId);
     }
     
-    public void createUserRecord(Map<String, String> userMap)
-    {
-    	setName(userMap.get("userName"));
-    	setLogin(userMap.get("login"));
-    	setPassword(userMap.get("password"));
-    	setRightTypeId(Integer.parseInt(userMap.get("rightTypeId")));
-    	
-    	createUserRecord();
-    }
-    
-    public void updateUserRecord()
+    public void updateRecord()
     {
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	ltb.updateRecord(this._id, this._name, this._login, this._password, this._rightTypeId);
     }
     
-    public void deleteUserRecord()
+    public void deleteRecord()
     {
-    	
+    	DBLocalToolbox ltb = new DBLocalToolbox();
+    	ltb.deleteRecord(this._id);
     }
 	
     
