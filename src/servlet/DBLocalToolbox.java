@@ -3,9 +3,9 @@ package servlet;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DBUserToolbox extends DBToolbox
+public class DBLocalToolbox extends DBToolbox
 {
-	public DBUserToolbox()
+	public DBLocalToolbox()
 	{
 		super();
 		_dbName = "tpJ2EE_LocalBase";

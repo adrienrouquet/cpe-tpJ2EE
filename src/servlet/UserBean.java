@@ -82,11 +82,11 @@ public class UserBean
     public boolean isUserValid()
     {
     	boolean result = false;
-    	DBUserToolbox utb = new DBUserToolbox();
+    	DBLocalToolbox ltb = new DBLocalToolbox();
     	
-    	result = utb.isUserValid(_login,_password);
+    	result = ltb.isUserValid(_login,_password);
     	
-    	utb.closeConn();
+    	ltb.closeConn();
     	
     	return result;	
     }
@@ -94,34 +94,35 @@ public class UserBean
     public boolean isUserAdmin()
     {
     	boolean result = false;
-    	DBUserToolbox utb = new DBUserToolbox();
+    	DBLocalToolbox ltb = new DBLocalToolbox();
     	
-    	result = utb.isAdmin(this._id);
+    	result = ltb.isAdmin(this._id);
     	
-    	utb.closeConn();
+    	ltb.closeConn();
     	
     	return result;
     }
     
     public void getUserRecord()
     {
-    	DBUserToolbox utb = new DBUserToolbox();
+    	DBLocalToolbox ltb = new DBLocalToolbox();
     	ResultSet rs = null;
     	
     	if (this._id >0)
     	{
-    		rs = utb.getRecord(this._id);
+    		rs = ltb.getRecord(this._id);
     	}
     	else
     	{
     		if (isUserValid())
     		{
-    			rs = utb.getRecord(this._login, this._password);
+    			rs = ltb.getRecord(this._login, this._password);
     		}
     	}
     	
     	try
     	{
+    		rs.first();
     		do
     		{
     			setName(rs.getString("name"));
@@ -136,18 +137,21 @@ public class UserBean
     	}	
     	finally
     	{
-    		utb.closeConn();
+    		ltb.closeConn();
     	}
     }
     
     public void createUserRecord()
     {
-    	
+    	DBLocalToolbox ltb = new DBLocalToolbox();
+    	ltb.createRecord(this._name, this._login, this._password, this._rightTypeId);
     }
+    
     public void updateUserRecord()
     {
     	
     }
+    
     public void deleteUserRecord()
     {
     	
