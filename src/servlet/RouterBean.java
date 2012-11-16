@@ -48,13 +48,18 @@ public class RouterBean {
 		if (action == null) {
 			action = "view";
 		}
+		System.out.println(this._actions[4]);
 		int actionNb = Arrays.binarySearch(this._actions, action);
 		if (actionNb >= 0) {
 			user.setAction(action);
 		}
+		else
+		{
+			actionNb = 0; 
+		}
 		
 		UserBean newUser = null;
-		
+		System.out.println(actionNb);
 		switch (actionNb) {
 		case 2: //addUserSubmit
 			newUser = new UserBean();
@@ -70,18 +75,25 @@ public class RouterBean {
 		case 4: //editUserSubmit
 			newUser = new UserBean(Integer.parseInt(params.get("userId")[0]));
 			newUser.createUserMap(params);
-			if (!newUser.userExists()) {
-				if (!newUser.updateRecord()) {
+//			if (!newUser.userExists()) { //NO TIME TO IMPLEMENT
+			System.out.println("TEST");
+			System.out.println(newUser.getId());
+			System.out.println(newUser.getName());
+			System.out.println(newUser.getLogin());
+			System.out.println(newUser.getPassword());
+			if (!newUser.updateRecord()) {
 					// ERROR
+					System.out.println("Error in updateRecord");
 				} else {
 					user.setAction("view");
 				}
-			}
+//			}
 			break;
 		case 5: //deleteUserSubmit
 			newUser = new UserBean(Integer.parseInt(params.get("userId")[0]));
 			if (!newUser.deleteRecord()) {
 				// ERROR
+				System.out.println("Error in addRecord");
 			} else {
 				user.setAction("view");
 			}
@@ -91,18 +103,16 @@ public class RouterBean {
 			if(user.getRecord())
 			{
 				user.setIsConnected(true);
-				System.out.println(user.getId());
 				_session.setAttribute("userBean", user);
+				user.setAction("view");
 				
-			}
-			else
-			{
-				System.out.println("CA MARCHE PAS");
 			}
 			break;
 			
 		case 7: //logout
-			_session.setAttribute("userBean", null);
+			user = new UserBean();
+			_session.invalidate();
+			
 			break;
 		default:
 			break;
@@ -111,15 +121,24 @@ public class RouterBean {
 		}
 	}
 	
-	public void routing(HttpServletRequest request, HttpServletResponse response) {
-		_session = request.getSession(true);
+	public UserBean loadUser()
+	{
 		UserBean user = (UserBean) _session.getAttribute("userBean");
-		
 		if (user == null) {
 			user = new UserBean();
 		}
-		
+		return user;
+	}
+	
+	public void routing(HttpServletRequest request, HttpServletResponse response) {
+		_session = request.getSession(true);
+		UserBean user = loadUser();
+		System.out.println(request.getParameter("action"));
 		switching(request.getParameter("action"), user, request.getParameterMap());
+
+		//Reloading the session and user parameters in case we got logged out
+		_session = request.getSession(true);
+		user = loadUser();
 		
 		// On regarde si on est connecté: Si non=>login.jsp, si oui=>admin.jsp ou cart.jsp
 		if(!user.getIsConnected())

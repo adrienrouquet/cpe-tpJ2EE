@@ -6,11 +6,12 @@
 
 <h2>Administration Panel</h2>
 <%
-if(userBean.isUserAdmin())
+if(userBean.isAdmin())
 {
 %>
+<%= userBean.getAction() %>
 	<p> Welcome <jsp:getProperty name="userBean" property="name" /> </p>
-	<form name="mainForm" method="post" action="OnlineStore">
+	<form name="logForm" method="post" action="OnlineStore">
 	Vous etes maintenant connecte
 	<input type="hidden" name="action" value="logout">
 	<input type="submit" value="Logout">
@@ -77,18 +78,18 @@ if(userBean.isUserAdmin())
 			<%  
 				}
 				
-				if(userBean.getAction().equals("editUser"))
-				{
+				if(userBean.getAction().equals("editUser") && rs.getString("userId").equals(request.getParameter("userId")))
+				{	
 			%>
-			<td><input type="button" onclick="document.forms['mainForm'].elements['action'].value='editUserSubmit';document.forms['mainForm'].elements['userId'].value='<%= rs.getString("userId") %>';" value="Save"/></td>
-			<td><input type="button" onclick="document.forms['mainForm'].elements['action'].value='view';" value="Cancel"/></td>
+			<td><input type="button" onclick="document.forms['mainForm'].elements['action'].value='editUserSubmit';document.forms['mainForm'].elements['userId'].value='<%= rs.getString("userId") %>';document.forms['mainForm'].submit();" value="Save"/></td>
+			<td><input type="button" onclick="document.forms['mainForm'].elements['action'].value='view';document.forms['mainForm'].submit();" value="Cancel"/></td>
 			<%
 				}
 				else
 				{
 			%>
-			<td><input type="button" onclick="document.forms['mainForm'].elements['action'].value='editUser';document.forms['mainForm'].elements['userId'].value='<%= rs.getString("userId") %>';" value="Edit"/></td>
-			<td><input type="button" onclick="if(confirm('Are you sure you want to delete this user?')){document.forms['mainForm'].elements['action'].value='deleteUser';document.forms['mainForm'].elements['userId'].value='<%= rs.getString("userId") %>';}" value="Delete"/></td>
+			<td><input type="button" onclick="document.forms['mainForm'].elements['action'].value='editUser';document.forms['mainForm'].elements['userId'].value='<%= rs.getString("userId") %>';document.forms['mainForm'].submit();" value="Edit"/></td>
+			<td><input type="button" onclick="if(confirm('Are you sure you want to delete this user?')){document.forms['mainForm'].elements['action'].value='deleteUser';document.forms['mainForm'].elements['userId'].value='<%= rs.getString("userId") %>';document.forms['mainForm'].submit();}" value="Delete"/></td>
 			<%
 				}
 			%>
