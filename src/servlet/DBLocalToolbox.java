@@ -126,7 +126,30 @@ public class DBLocalToolbox extends DBToolbox
 		return result;
 	}
 	
-	private boolean hasResult(ResultSet rs)
+	public ResultSet getRightTypes()
+	{
+		ResultSet result = null;
+		String query = "SELECT * FROM rightTypes;";
+		
+		try
+		{
+			ResultSet rs = getResult(query);
+			
+			if (hasResult(rs))
+				{
+					rs.first();
+					result = rs;
+				}
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Error in getRightTypes:" + e.getMessage());
+		}
+		
+		return result;
+	}
+	
+ 	private boolean hasResult(ResultSet rs)
 	{
 		boolean result = false;
 		
