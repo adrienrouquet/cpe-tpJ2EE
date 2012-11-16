@@ -91,6 +91,7 @@ public class RouterBean {
 			if(user.getRecord())
 			{
 				user.setIsConnected(true);
+				System.out.println(user.getId());
 				_session.setAttribute("userBean", user);
 				
 			}
@@ -101,7 +102,7 @@ public class RouterBean {
 			break;
 			
 		case 7: //logout
-			
+			_session.setAttribute("userBean", null);
 			break;
 		default:
 			break;
