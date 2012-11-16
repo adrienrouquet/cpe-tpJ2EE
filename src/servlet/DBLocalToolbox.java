@@ -17,7 +17,7 @@ public class DBLocalToolbox extends DBToolbox
 		_dbHandler.closeConn();
 	}
 	
-	public boolean isUserValid(String login, String password)
+	public boolean isValid(String login, String password)
 
 	{
 		String query = "SELECT * FROM users WHERE login='" + login + "' AND password='" + password + "';";

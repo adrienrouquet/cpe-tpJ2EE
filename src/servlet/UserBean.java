@@ -81,12 +81,12 @@ public class UserBean
     	setPassword(password);
     }
 	
-    public boolean isUserValid()
+    public boolean isValid()
     {
     	boolean result = false;
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	
-    	result = ltb.isUserValid(_login,_password);
+    	result = ltb.isValid(_login,_password);
     	
     	ltb.closeConn();
     	
@@ -162,7 +162,7 @@ public class UserBean
     	{
     		rs = ltb.getRecord(this._id);
     	}
-    	else if (isUserValid())
+    	else if (isValid())
     	{
     		rs = ltb.getRecord(this._login, this._password);
     	}
