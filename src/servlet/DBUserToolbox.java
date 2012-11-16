@@ -100,11 +100,7 @@ public class DBUserToolbox extends DBToolbox
 	public void createRecord(String name, String login, String password, int rightTypeId)
 	{
 		String query = "INSERT INTO users VALUES ('" + name + "','" + login + "','" + password + "','" + rightTypeId + "');";
-		
-		try
-		{
-			
-		}
+		executeQuery(query);
 	}
 	
 	public ResultSet getUsers()
@@ -154,14 +150,11 @@ public class DBUserToolbox extends DBToolbox
 	
 	private ResultSet getResult(String query)
 	{
-		ResultSet result = _dbHandler.executeQueryRS(query);
-		
-		
-		return result;
+		return _dbHandler.executeQueryRS(query);
 	}
 	
-	private void executeQuery(String query)
+	private boolean executeQuery(String query)
 	{
-		
+		return _dbHandler.executeQuery(query);
 	}
 }

@@ -11,7 +11,7 @@ public class UserBean
 	private String _password = "";
 	private int _rightTypeId = 0;
 	private boolean _isConnected = false;
-	private String _action = "";
+	private String _action = "view";
 	
 	public int getId() {
 		return _id;
