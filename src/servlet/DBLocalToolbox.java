@@ -105,16 +105,22 @@ public class DBLocalToolbox extends DBToolbox
 		return result;
 	}
 	
-	public void createRecord(String name, String login, String password, int rightTypeId)
+	public boolean createRecord(String name, String login, String password, int rightTypeId)
 	{
 		String query = "INSERT INTO users VALUES ('" + name + "','" + login + "','" + password + "','" + rightTypeId + "');";
-		executeQuery(query);
+		return executeQuery(query);
 	}
 	
-	public void updateRecord(int id, String name, String login, String password, int rightTypeId)
+	public boolean updateRecord(int id, String name, String login, String password, int rightTypeId)
 	{
 		String query = "UPDATE users SET name='" + name + "', login='" + login + "', password='" + password + "', rightTypesId='" + rightTypeId + "' WHERE id='" + id + "';";
-		executeQuery(query);
+		return executeQuery(query);
+	}
+	
+	public boolean deleteRecord(int id)
+	{
+		String query = "DELETE FROM users WHERE id='" + id + "';";
+		return executeQuery(query);
 	}
 	
 	public ResultSet getUsers()
