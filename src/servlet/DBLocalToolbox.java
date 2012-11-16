@@ -18,8 +18,16 @@ public class DBLocalToolbox extends DBToolbox
 	}
 	
 	public boolean isUserValid(String login, String password)
+
 	{
 		String query = "SELECT * FROM users WHERE login='" + login + "' AND password='" + password + "';";
+		ResultSet rs = getResult(query);
+		return hasResult(rs);
+	}
+	
+	public boolean userExists(String login)
+	{
+		String query="SELECT * FROM users WHERE login='" + login + "';";
 		ResultSet rs = getResult(query);
 		return hasResult(rs);
 	}

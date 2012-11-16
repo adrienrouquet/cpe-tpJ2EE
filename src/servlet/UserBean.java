@@ -91,6 +91,18 @@ public class UserBean
     	return result;	
     }
     
+    public boolean userExists()
+    {
+    	boolean result = false;
+    	DBLocalToolbox ltb = new DBLocalToolbox();
+    	
+    	result = ltb.userExists(this._login);
+    	
+    	ltb.closeConn();
+    	
+    	return result;	
+    }
+    
     public boolean isUserAdmin()
     {
     	boolean result = false;
@@ -103,8 +115,9 @@ public class UserBean
     	return result;
     }
     
-    public void getUserRecord()
+    public boolean getUserRecord()
     {
+    	boolean done = false;
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	ResultSet rs = null;
     	
@@ -112,13 +125,11 @@ public class UserBean
     	{
     		rs = ltb.getRecord(this._id);
     	}
-    	else
+    	else if (isUserValid())
     	{
-    		if (isUserValid())
-    		{
-    			rs = ltb.getRecord(this._login, this._password);
-    		}
+    		rs = ltb.getRecord(this._login, this._password);
     	}
+    	else return false;
     	
     	try
     	{
@@ -130,6 +141,8 @@ public class UserBean
                 setPassword(rs.getString("password"));
                 setRightTypeId(Integer.parseInt( rs.getString("rightTypeId")));
     		}while (rs.next());
+    		
+    		done = true;
     	}
     	catch (SQLException e)
     	{
@@ -139,6 +152,8 @@ public class UserBean
     	{
     		ltb.closeConn();
     	}
+    	
+    	return done;
     }
     
     public void createUserRecord()
