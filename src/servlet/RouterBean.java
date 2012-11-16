@@ -14,12 +14,39 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class RouterBean {
 
+	private HttpServletRequest _request;
+	private HttpServletResponse _response;
 	private String _url = "";
 	private String _error = "";
-	private String[] _actions =
-		{"view", "addUser", "addUserSubmit", "editUser", "editUserSubmit", "deleteUserSubmit", "login", "logout"};
+	private String[] _actions = {
+			"view",
+			"addUser",
+			"addUserSubmit",
+			"editUser",
+			"editUserSubmit",
+			"deleteUserSubmit",
+			"login",
+			"logout"
+			};
+	
 	private HttpSession _session;
 	
+	public HttpServletRequest getRequest() {
+		return _request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this._request = request;
+	}
+
+	public HttpServletResponse getResponse() {
+		return _response;
+	}
+
+	public void setResponse(HttpServletResponse response) {
+		this._response = response;
+	}
+
 	public String getUrl() {
 		return this._url;
 	}
@@ -44,24 +71,26 @@ public class RouterBean {
 		this._actions = actions;
 	}
 
-	protected void switching(String action, UserBean user, Map<String, String[]> params) {
+	protected void switching(UserBean user) {
+		String action = _request.getParameter("action");
+		Map<String, String[]> params = _request.getParameterMap();
+		
 		if (action == null) {
 			action = "view";
 		}
-		System.out.println(this._actions[4]);
+		
 		int actionNb = Arrays.binarySearch(this._actions, action);
 		if (actionNb >= 0) {
 			user.setAction(action);
-		}
-		else
-		{
-			actionNb = 0; 
+		} else {
+			actionNb = -1;
 		}
 		
 		UserBean newUser = null;
-		System.out.println(actionNb);
+		
 		switch (actionNb) {
 		case 2: //addUserSubmit
+			System.out.println("SWITCHING: case 2: //addUserSubmit");
 			newUser = new UserBean();
 			newUser.createUserMap(params);
 			if (!newUser.userExists()) {
@@ -73,10 +102,10 @@ public class RouterBean {
 			}
 			break;
 		case 4: //editUserSubmit
+			System.out.println("SWITCHING: case 4: //editUserSubmit");
 			newUser = new UserBean(Integer.parseInt(params.get("userId")[0]));
 			newUser.createUserMap(params);
 //			if (!newUser.userExists()) { //NO TIME TO IMPLEMENT
-			System.out.println("TEST");
 			System.out.println(newUser.getId());
 			System.out.println(newUser.getName());
 			System.out.println(newUser.getLogin());
@@ -90,6 +119,7 @@ public class RouterBean {
 //			}
 			break;
 		case 5: //deleteUserSubmit
+			System.out.println("SWITCHING: case 5: //deleteUserSubmit");
 			newUser = new UserBean(Integer.parseInt(params.get("userId")[0]));
 			if (!newUser.deleteRecord()) {
 				// ERROR
@@ -99,6 +129,7 @@ public class RouterBean {
 			}
 			break;
 		case 6: //login
+			System.out.println("SWITCHING: case 6: //login");
 			user.createUserMap(params);
 			if(user.getRecord())
 			{
@@ -108,21 +139,21 @@ public class RouterBean {
 				
 			}
 			break;
-			
 		case 7: //logout
+			System.out.println("SWITCHING: case 7: //logout");
 			user = new UserBean();
 			_session.invalidate();
-			
+			//Reloading the session and user parameters in case we got logged out
+			_session = _request.getSession(true);
+			user = loadUser();
 			break;
 		default:
+			user.setAction("view");
 			break;
-			
-			
 		}
 	}
 	
-	public UserBean loadUser()
-	{
+	public UserBean loadUser() {
 		UserBean user = (UserBean) _session.getAttribute("userBean");
 		if (user == null) {
 			user = new UserBean();
@@ -130,19 +161,14 @@ public class RouterBean {
 		return user;
 	}
 	
-	public void routing(HttpServletRequest request, HttpServletResponse response) {
-		_session = request.getSession(true);
+	public void routing() {
+		_session = _request.getSession(true);
 		UserBean user = loadUser();
-		System.out.println(request.getParameter("action"));
-		switching(request.getParameter("action"), user, request.getParameterMap());
+//		System.out.println(_request.getParameter("action"));
+		switching(user);
 
-		//Reloading the session and user parameters in case we got logged out
-		_session = request.getSession(true);
-		user = loadUser();
-		
 		// On regarde si on est connecté: Si non=>login.jsp, si oui=>admin.jsp ou cart.jsp
 		if(!user.getIsConnected())
-			
 			this._url = "/login.jsp";
 		else {
 			if (user.isAdmin())
@@ -151,9 +177,9 @@ public class RouterBean {
 				this._url = "/cart.jsp";
 		}
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher("/index.jsp");
+		RequestDispatcher dispatch = this._request.getRequestDispatcher("/index.jsp");
 		try {
-			dispatch.forward(request, response);
+			dispatch.forward(_request, _response);
 		} catch (ServletException e) {
 			System.err.println("Error in routing: " + e.getMessage());
 			//e.printStackTrace();
