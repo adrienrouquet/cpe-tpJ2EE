@@ -95,6 +95,31 @@ public class UserBean
     	return result;
     }
     
+    public void getUserRecordFromCredentials()
+    {
+    	DBUserToolbox utb = new DBUserToolbox();
+    	ResultSet rs = utb.getRecord(this._id);
+    	
+    	try
+    	{
+    		while (rs.next())
+    		{
+    			setName(rs.getString("name"));
+                setLogin(rs.getString("login"));
+                setPassword(rs.getString("password"));
+                setRightTypeId(Integer.parseInt( rs.getString("rightTypeId")));
+    		}
+    	}
+    	catch (SQLException e)
+    	{
+    		System.err.println("Error in getUserRecord:" + e.getMessage());
+    	}	
+    	finally
+    	{
+    		utb.closeConn();
+    	}
+    }
+    
     public void getUserRecord()
     {
     	DBUserToolbox utb = new DBUserToolbox();
