@@ -119,11 +119,29 @@ public class UserBean
 
     public void createUserMap(Map<String, String> userMap)
     {
-    	setId(Integer.parseInt(userMap.get("userId")));
+    	String id = userMap.get("userId");
+    	if (id == "")
+    	{
+    		setId(0);
+    	}
+    	else
+    	{
+        	setId(Integer.parseInt(id));
+    	}
+    	
+    	String rightTypeId = userMap.get("userId");
+    	if (rightTypeId == "")
+    	{
+    		setRightTypeId(0);
+    	}
+    	else
+    	{
+    		setRightTypeId(Integer.parseInt(rightTypeId));
+    	}
+    	
     	setName(userMap.get("userName"));
     	setLogin(userMap.get("login"));
     	setPassword(userMap.get("password"));
-    	setRightTypeId(Integer.parseInt(userMap.get("rightTypeId")));
     }
     
     public boolean getRecord()
