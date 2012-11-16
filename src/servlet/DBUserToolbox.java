@@ -2,8 +2,6 @@ package servlet;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DBUserToolbox extends DBToolbox
 {
@@ -36,13 +34,13 @@ public class DBUserToolbox extends DBToolbox
 			if (hasResult(rs))
 			{
 				rs.first();
-				while (rs.next())
+				do 
 				{
 					if (rs.getString("rightTypeId").equals("1"))
 					{
 						result = true;
 					}
-				}
+				}while (rs.next());
 			}
 		}
 		catch (SQLException e)
@@ -56,14 +54,78 @@ public class DBUserToolbox extends DBToolbox
 	public ResultSet getRecord(int id)
 	{
 		ResultSet result = null;
-		
 		String query = "SELECT * FROM users WHERE id='" + id + "';";
-		ResultSet rs = getResult(query);
 		
-		if (hasResult(rs))
-			{
-				result = rs;
-			}
+		try
+		{
+			ResultSet rs = getResult(query);
+			
+			if (hasResult(rs))
+				{
+					rs.first();
+					result = rs;
+				}
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Error in getRecord:" + e.getMessage());
+		}
+				
+		return result;
+	}
+	
+	public ResultSet getRecord(String login, String password)
+	{
+		ResultSet result = null;
+		String query = "SELECT * FROM users WHERE login='" + login + "' AND password='" + password + "';";
+		
+		try
+		{
+			ResultSet rs = getResult(query);
+			
+			if (hasResult(rs))
+				{
+					rs.first();
+					result = rs;
+				}
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Error in getRecord:" + e.getMessage());
+		}
+				
+		return result;
+	}
+	
+	public void createRecord(String name, String login, String password, int rightTypeId)
+	{
+		String query = "INSERT INTO users VALUES ('" + name + "','" + login + "','" + password + "','" + rightTypeId + "');";
+		
+		try
+		{
+			
+		}
+	}
+	
+	public ResultSet getUsers()
+	{
+		ResultSet result = null; 
+		String query = "SELECT u.id as 'userId', u.name as 'userName', u.login, u.password, u.rightTypeId as 'rightTypeId', rt.name as 'rightTypeName' from users as u inner join rightTypes as rt on u.rightTypeId = rt.id";
+		
+		try
+		{
+			ResultSet rs = getResult(query);
+			
+			if (hasResult(rs))
+				{
+					rs.first();
+					result = rs;
+				}
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Error in getUsers:" + e.getMessage());
+		}
 		
 		return result;
 	}
@@ -76,10 +138,10 @@ public class DBUserToolbox extends DBToolbox
 		{
 			if (rs != null)
 			{
-				while(rs.next())
+				do 
 				{
 					result = true;
-				}
+				}while(rs.next());
 			}
 		}
 		catch (SQLException e)
@@ -98,17 +160,8 @@ public class DBUserToolbox extends DBToolbox
 		return result;
 	}
 	
-	public ResultSet getUsers()
+	private void executeQuery(String query)
 	{
-		ResultSet result = null; 
 		
-		String query = "SELECT u.id as 'userId', u.name as 'userName', u.login, u.password, u.rightTypeId as 'rightTypeId', rt.name as 'rightTypeName' from users as u inner join rightTypes as rt on u.rightTypeId = rt.id";
-		ResultSet rs = getResult(query);
-		
-		if (hasResult(rs))
-			{
-				result = rs;
-			}
-		return result;
 	}
 }

@@ -11,6 +11,7 @@ public class UserBean
 	private String _password = "";
 	private int _rightTypeId = 0;
 	private boolean _isConnected = false;
+	private String _action = "";
 	
 	public int getId() {
 		return _id;
@@ -54,6 +55,13 @@ public class UserBean
 		this._isConnected = isConnected;
 	}
 	
+	public String getAction() {
+		return _action;
+	}
+	public void setAction(String action) {
+		this._action = action;
+	}
+	
     public UserBean()
     {
         super();
@@ -95,45 +103,32 @@ public class UserBean
     	return result;
     }
     
-    public void getUserRecordFromCredentials()
-    {
-    	DBUserToolbox utb = new DBUserToolbox();
-    	ResultSet rs = utb.getRecord(this._id);
-    	
-    	try
-    	{
-    		while (rs.next())
-    		{
-    			setName(rs.getString("name"));
-                setLogin(rs.getString("login"));
-                setPassword(rs.getString("password"));
-                setRightTypeId(Integer.parseInt( rs.getString("rightTypeId")));
-    		}
-    	}
-    	catch (SQLException e)
-    	{
-    		System.err.println("Error in getUserRecord:" + e.getMessage());
-    	}	
-    	finally
-    	{
-    		utb.closeConn();
-    	}
-    }
-    
     public void getUserRecord()
     {
     	DBUserToolbox utb = new DBUserToolbox();
-    	ResultSet rs = utb.getRecord(this._id);
+    	ResultSet rs = null;
+    	
+    	if (this._id >0)
+    	{
+    		rs = utb.getRecord(this._id);
+    	}
+    	else
+    	{
+    		if (isUserValid())
+    		{
+    			rs = utb.getRecord(this._login, this._password);
+    		}
+    	}
     	
     	try
     	{
-    		while (rs.next())
+    		do
     		{
     			setName(rs.getString("name"));
                 setLogin(rs.getString("login"));
                 setPassword(rs.getString("password"));
                 setRightTypeId(Integer.parseInt( rs.getString("rightTypeId")));
-    		}
+    		}while (rs.next());
     	}
     	catch (SQLException e)
     	{
