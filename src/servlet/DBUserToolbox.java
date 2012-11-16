@@ -99,12 +99,13 @@ public class DBUserToolbox extends DBToolbox
 	public ResultSet getUsers()
 	{
 		ResultSet result = null;
+		String query = "SELECT u.id as 'userId', u.name as 'userName', u.login, u.password, u.rightTypeId as 'rightTypeId', rt.name as 'rightTypeName' from users as u inner join rightTypes as rt on u.rightTypeId = rt.id";
 		
 		return result;
 	}
 	//{
 	//	
-	//		String query = "SELECT u.id as 'userId', u.name as 'userName', u.login, u.password, u.rightTypeId as 'rightTypeId', rt.name as 'rightTypeName' from users as u inner join rightTypes as rt on u.rightTypeId = rt.id";
+	//		
 	//
 	//}
 	
