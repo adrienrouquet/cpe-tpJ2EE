@@ -196,27 +196,43 @@ public class UserBean
     
     public boolean addRecord()
     {
+    	boolean done =false;
+    	
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	if(this._id != 0 && this._name != "" && this._login != "" && this._password != "" && this._rightTypeId != 0)
     	{
-    		return ltb.createRecord(this._name, this._login, this._password, this._rightTypeId);    		
+    		done = ltb.createRecord(this._name, this._login, this._password, this._rightTypeId);  
     	}
-    	return false;
+    	
+    	ltb.closeConn();
+    	
+    	return done;
     }
     
     public boolean updateRecord()
     {
+    	boolean done = false;
+    	
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	if(this._id != 0 && this._name != "" && this._login != "" && this._password != "" && this._rightTypeId != 0)
     	{
-    		return ltb.updateRecord(this._id, this._name, this._login, this._password, this._rightTypeId);
+    		done = ltb.updateRecord(this._id, this._name, this._login, this._password, this._rightTypeId);
     	}
-    	return false;
+    	
+    	ltb.closeConn();
+    	
+    	return done;
     }
     
     public boolean deleteRecord()
     {
+    	boolean done = false;
+    	
     	DBLocalToolbox ltb = new DBLocalToolbox();
-    	return ltb.deleteRecord(this._id);
+    	done = ltb.deleteRecord(this._id);
+    	
+    	ltb.closeConn();
+    	
+    	return done;
     }
 }
