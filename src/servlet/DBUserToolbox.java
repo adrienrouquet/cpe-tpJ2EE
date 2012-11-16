@@ -22,20 +22,20 @@ public class DBUserToolbox extends DBToolbox
 	public boolean isUserValid(String login, String password)
 	{
 		String query = "SELECT * FROM users WHERE login='" + login + "' AND password='" + password + "';";
-		
-		return hasResult(query);
+		ResultSet rs = getResult(query);
+		return hasResult(rs);
 	}
 
 	public boolean isAdmin(int id)
 	{
 		boolean result = false;
 		String query = "SELECT rightTypeId FROM users WHERE id='" + id + "';";
-		
+		ResultSet rs = getResult(query);
 		try
 		{
-			if (hasResult(query))
+			if (hasResult(rs))
 			{
-				ResultSet rs = getResult(query);
+				rs.first();
 				while (rs.next())
 				{
 					if (rs.getString("rightTypeId").equals("1"))
@@ -56,14 +56,14 @@ public class DBUserToolbox extends DBToolbox
 	public ResultSet getRecord(int id)
 	{
 		String query = "SELECT * FROM users WHERE id='" + id + "';";
-		ResultSet result = getResult(query);
+		ResultSet rs = getResult(query);
 		
-		if (hasResult(result))
+		if (hasResult(rs))
 			{
-				result = getResult(query);
+				return rs;
 			}
-
-		return result;
+		return null;
+		
 	}
 	
 	private boolean hasResult(ResultSet rs)
