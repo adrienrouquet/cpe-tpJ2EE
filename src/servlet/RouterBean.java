@@ -17,7 +17,8 @@ public class RouterBean {
 	private String _url = "";
 	private String _error = "";
 	private String[] _actions =
-		{"view", "addUser", "addUserSubmit", "editUser", "editUserSubmit", "deleteUserSubmit"};
+		{"view", "addUser", "addUserSubmit", "editUser", "editUserSubmit", "deleteUserSubmit", "login", "logout"};
+	private HttpSession _session;
 	
 	public String getUrl() {
 		return this._url;
@@ -43,7 +44,10 @@ public class RouterBean {
 		this._actions = actions;
 	}
 
-	protected void switching(String action, UserBean user, Map<String, String> params) {
+	protected void switching(String action, UserBean user, Map<String, String[]> params) {
+		if (action == null) {
+			action = "view";
+		}
 		int actionNb = Arrays.binarySearch(this._actions, action);
 		if (actionNb >= 0) {
 			user.setAction(action);
@@ -64,7 +68,7 @@ public class RouterBean {
 			}
 			break;
 		case 4: //editUserSubmit
-			newUser = new UserBean(Integer.parseInt(params.get("userId")));
+			newUser = new UserBean(Integer.parseInt(params.get("userId")[0]));
 			newUser.createUserMap(params);
 			if (!newUser.userExists()) {
 				if (!newUser.updateRecord()) {
@@ -75,37 +79,53 @@ public class RouterBean {
 			}
 			break;
 		case 5: //deleteUserSubmit
-			newUser = new UserBean(Integer.parseInt(params.get("userId")));
+			newUser = new UserBean(Integer.parseInt(params.get("userId")[0]));
 			if (!newUser.deleteRecord()) {
 				// ERROR
 			} else {
 				user.setAction("view");
 			}
+			break;
+		case 6: //login
+			user.createUserMap(params);
+			if(user.getRecord())
+			{
+				user.setIsConnected(true);
+				_session.setAttribute("userBean", user);
+				
+			}
+			else
+			{
+				System.out.println("CA MARCHE PAS");
+			}
+			break;
+			
+		case 7: //logout
+			
+			break;
 		default:
 			break;
+			
+			
 		}
 	}
 	
 	public void routing(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession(true);
-		UserBean user = (UserBean) session.getAttribute("userBean");
+		_session = request.getSession(true);
+		UserBean user = (UserBean) _session.getAttribute("userBean");
 		
 		if (user == null) {
-//			System.out.println("USER NULL");
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			
-			user = new UserBean(username, password);
-			user.isUserValid();
+			user = new UserBean();
 		}
 		
 		switching(request.getParameter("action"), user, request.getParameterMap());
 		
 		// On regarde si on est connecté: Si non=>login.jsp, si oui=>admin.jsp ou cart.jsp
 		if(!user.getIsConnected())
+			
 			this._url = "/login.jsp";
 		else {
-			if (user.isUserAdmin())
+			if (user.isAdmin())
 				this._url = "/admin.jsp";
 			else
 				this._url = "/cart.jsp";

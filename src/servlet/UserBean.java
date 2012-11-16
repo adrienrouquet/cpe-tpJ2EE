@@ -105,7 +105,7 @@ public class UserBean
     	return result;	
     }
     
-    public boolean isUserAdmin()
+    public boolean isAdmin()
     {
     	boolean result = false;
     	DBLocalToolbox ltb = new DBLocalToolbox();
@@ -117,31 +117,39 @@ public class UserBean
     	return result;
     }
 
-    public void createUserMap(Map<String, String> userMap)
+    public void createUserMap(Map<String, String[]> userMap)
     {
-    	String id = userMap.get("userId");
-    	if (id == "")
+    	String[] id = userMap.get("userId");
+    	if (id == null)
     	{
     		setId(0);
     	}
     	else
     	{
-        	setId(Integer.parseInt(id));
+        	setId(Integer.parseInt(id[0]));
     	}
     	
-    	String rightTypeId = userMap.get("userId");
-    	if (rightTypeId == "")
+    	String[] rightTypeId = userMap.get("userId");
+    	if (rightTypeId == null)
     	{
     		setRightTypeId(0);
     	}
     	else
     	{
-    		setRightTypeId(Integer.parseInt(rightTypeId));
+    		setRightTypeId(Integer.parseInt(rightTypeId[0]));
     	}
     	
-    	setName(userMap.get("userName"));
-    	setLogin(userMap.get("login"));
-    	setPassword(userMap.get("password"));
+    	String[] name = userMap.get("userName");
+    	if(name != null)
+    		setName(name[0]);
+    	
+    	String[] login = userMap.get("login");
+    	if(login != null)
+    		setLogin(login[0]);
+    	
+    	String[] password = userMap.get("password");
+    	if(password != null)
+    		setPassword(password[0]);
     }
     
     public boolean getRecord()
