@@ -23,16 +23,21 @@ public class OnlineStore extends HttpServlet {
 		
 		context.setAttribute("routerBean", this._router);
 		
-		_router.routing(request, response);
+		_router.setRequest(request);
+		_router.setResponse(response);
+		
+		_router.routing();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		ServletContext context = getServletContext();
 		
 		context.setAttribute("routerBean", this._router);
 		
-		_router.routing(request, response);
+		_router.setRequest(request);
+		_router.setResponse(response);
+		
+		_router.routing();
 	}
 
 }
