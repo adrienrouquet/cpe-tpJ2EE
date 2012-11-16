@@ -154,7 +154,6 @@ public class UserBean
     
     public boolean getRecord()
     {
-    	boolean done = false;
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	ResultSet rs = null;
     	
@@ -166,8 +165,14 @@ public class UserBean
     	{
     		rs = ltb.getRecord(this._login, this._password);
     	}
-    	else return false;
+    	else 
+    	{
+    		System.err.println("Error in UserBean.getRecord: fields are not correct. Cannot get record");
+    		return false;
+    	}    
     	
+    	
+    	//In case we did try to get a record, we are going to fetch the data into the UserBean
     	try
     	{
     		rs.first();
@@ -178,35 +183,30 @@ public class UserBean
                 setLogin(rs.getString("login"));
                 setPassword(rs.getString("password"));
                 setRightTypeId(Integer.parseInt( rs.getString("rightTypeId")));
-    		}while (rs.next());
-    		
-    		done = true;
+    		}while (rs.next());  
+    		ltb.closeConn();
+    		return true;
     	}
     	catch (SQLException e)
     	{
-    		System.err.println("Error in getUserRecord:" + e.getMessage());
-    	}	
-    	finally
-    	{
-    		ltb.closeConn();
-    	}
-    	
-    	return done;
+    		System.err.println("Error in UserBean.getRecord:" + e.getMessage());
+    	} 	
+    	return false;
     }
     
     public boolean addRecord()
-    {
-    	boolean done =false;
-    	
+    {    	
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	if(this._id != 0 && this._name != "" && this._login != "" && this._password != "" && this._rightTypeId != 0)
     	{
-    		done = ltb.createRecord(this._name, this._login, this._password, this._rightTypeId);  
+    		if(ltb.createRecord(this._name, this._login, this._password, this._rightTypeId))
+    		{
+    			ltb.closeConn();
+    			return true;
+    		}
     	}
-    	
-    	ltb.closeConn();
-    	
-    	return done;
+    	System.err.println("Error in UserBean.addRecord: No record added");
+    	return false;
     }
     
     public boolean updateRecord()

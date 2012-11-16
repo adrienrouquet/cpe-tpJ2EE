@@ -12,6 +12,16 @@ public class DBLocalToolbox extends DBToolbox
 		_dbHandler = new DBHandler(_dbName);
 	}
 	
+	private ResultSet getResult(String query)
+	{
+		return _dbHandler.executeQueryRS(query);
+	}
+	
+	private boolean executeQuery(String query)
+	{
+		return _dbHandler.executeQuery(query);
+	}
+	
 	public void closeConn()
 	{
 		_dbHandler.closeConn();
@@ -21,15 +31,31 @@ public class DBLocalToolbox extends DBToolbox
 
 	{
 		String query = "SELECT * FROM users WHERE login='" + login + "' AND password='" + password + "';";
-		ResultSet rs = getResult(query);
-		return hasResult(rs);
+		try
+		{
+			ResultSet rs = getResult(query);
+			return hasResult(rs);
+		}
+		catch (Exception e)
+		{
+			System.err.println("Error in DBLocalToolbox.isValid: " + e.getMessage());
+		}
+		return false;
 	}
 	
 	public boolean userExists(String login)
 	{
 		String query="SELECT * FROM users WHERE login='" + login + "';";
-		ResultSet rs = getResult(query);
-		return hasResult(rs);
+		try
+		{
+			ResultSet rs = getResult(query);
+			return hasResult(rs);
+		}
+		catch (Exception e)
+		{
+			System.err.println("Error in DBLocalToolbox.userExists: " + e.getMessage());
+		}
+		return false;
 	}
 
 	public boolean isAdmin(int id)
@@ -42,67 +68,58 @@ public class DBLocalToolbox extends DBToolbox
 			if (hasResult(rs))
 			{
 				rs.first();
-				do 
+				do
 				{
 					if (rs.getString("rightTypeId").equals("1"))
 					{
-						result = true;
+						return true;
 					}
 				}while (rs.next());
 			}
 		}
 		catch (SQLException e)
 		{
-			System.err.println("Error in isAdmin:" + e.getMessage());
-		}
-		
-		return result;
+			System.err.println("Error in DBLocalToolbox.isAdmin: " + e.getMessage());
+		}		
+		return false;
 	}
 	
 	public ResultSet getRecord(int id)
-	{
-		ResultSet result = null;
+	{		
 		String query = "SELECT * FROM users WHERE id='" + id + "';";
-		
 		try
 		{
-			ResultSet rs = getResult(query);
-			
+			ResultSet rs = getResult(query);			
 			if (hasResult(rs))
 				{
 					rs.first();
-					result = rs;
+					return rs;
 				}
 		}
 		catch (SQLException e)
 		{
-			System.err.println("Error in getRecord:" + e.getMessage());
-		}
-				
-		return result;
+			System.err.println("Error in DBLocalToolbox.getRecord: " + e.getMessage());
+		}				
+		return null;
 	}
 	
 	public ResultSet getRecord(String login, String password)
 	{
-		ResultSet result = null;
 		String query = "SELECT * FROM users WHERE login='" + login + "' AND password='" + password + "';";
-		
 		try
 		{
-			ResultSet rs = getResult(query);
-			
+			ResultSet rs = getResult(query);			
 			if (hasResult(rs))
 				{
 					rs.first();
-					result = rs;
+					return rs;
 				}
 		}
 		catch (SQLException e)
 		{
-			System.err.println("Error in getRecord:" + e.getMessage());
-		}
-				
-		return result;
+			System.err.println("Error in DBLocalToolbox.getRecord: " + e.getMessage());
+		}				
+		return null;
 	}
 	
 	public boolean createRecord(String name, String login, String password, int rightTypeId)
@@ -125,32 +142,26 @@ public class DBLocalToolbox extends DBToolbox
 	
 	public ResultSet getUsers()
 	{
-		ResultSet result = null; 
 		String query = "SELECT u.id as 'userId', u.name as 'userName', u.login, u.password, u.rightTypeId as 'rightTypeId', rt.name as 'rightTypeName' from users as u inner join rightTypes as rt on u.rightTypeId = rt.id";
-		
 		try
 		{
 			ResultSet rs = getResult(query);
-			
 			if (hasResult(rs))
 				{
 					rs.first();
-					result = rs;
+					return rs;
 				}
 		}
 		catch (SQLException e)
 		{
-			System.err.println("Error in getUsers:" + e.getMessage());
+			System.err.println("Error in DBLocalToolbox.getUsers: " + e.getMessage());
 		}
-		
-		return result;
+		return null;
 	}
 	
 	public ResultSet getRightTypes()
 	{
-		ResultSet result = null;
-		String query = "SELECT * FROM rightTypes;";
-		
+		String query = "SELECT * FROM rightTypes;";		
 		try
 		{
 			ResultSet rs = getResult(query);
@@ -158,46 +169,35 @@ public class DBLocalToolbox extends DBToolbox
 			if (hasResult(rs))
 				{
 					rs.first();
-					result = rs;
+					return rs;
 				}
 		}
 		catch (SQLException e)
 		{
-			System.err.println("Error in getRightTypes:" + e.getMessage());
+			System.err.println("Error in DBLocalToolbox.getRightTypes: " + e.getMessage());
 		}
 		
-		return result;
+		return null;
 	}
 	
  	private boolean hasResult(ResultSet rs)
 	{
-		boolean result = false;
-		
 		try
 		{
 			if (rs != null)
 			{
 				do 
 				{
-					result = true;
+					return true;
 				}while(rs.next());
 			}
 		}
 		catch (SQLException e)
 		{
-			System.err.println("Error in hasResult:" + e.getMessage());
-		}
-		
-		return result;
+			System.err.println("Error in DBLocalToolbox.hasResult: " + e.getMessage());
+		}		
+		return false;
 	}
 	
-	private ResultSet getResult(String query)
-	{
-		return _dbHandler.executeQueryRS(query);
-	}
 	
-	private boolean executeQuery(String query)
-	{
-		return _dbHandler.executeQuery(query);
-	}
 }
