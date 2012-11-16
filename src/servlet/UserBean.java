@@ -58,15 +58,17 @@ public class UserBean
     {
         super();
     }
-    public UserBean(int id, String name, String login, String password, int rightTypeId)
+    public UserBean(int id)
     {
         super();
         
         setId(id);
-        setName(name);
-        setLogin(login);
-        setPassword(password);
-        setRightTypeId(rightTypeId);
+    }
+    public UserBean(String name, String password) {
+    	super();
+    	
+    	setName(name);
+    	setPassword(password);
     }
 	
     public boolean isUserValid()
