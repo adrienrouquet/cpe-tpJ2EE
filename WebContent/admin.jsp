@@ -11,15 +11,13 @@ if(userBean.isAdmin())
 %>
 <%= userBean.getAction() %>
 	<p> Welcome <jsp:getProperty name="userBean" property="name" /> </p>
-	<form name="logForm" method="post" action="OnlineStore">
+	<form name="mainForm" method="post" action="OnlineStore">
 	Vous etes maintenant connecte
-	<input type="hidden" name="action" value="logout">
-	<input type="submit" value="Logout">
-	</form>
+	<input type="button" value="Logout" onclick="document.forms['mainForm'].elements['action'].value='logout';document.forms['mainForm'].submit();">
 	
 	<div class="adminMenu" style="margin-left: 5%; margin-right: 5%;  border-color: rgb(128,128,128); border-style: solid; background: rgb(220,220,220); width: 90%;">
+
 	Users:
-	<form name="mainForm" action="OnlineStore" method="post">
 	<input type="hidden" name="action" value="" />
 	<input type="hidden" name="userId" value="" />
 	</form>
@@ -89,7 +87,7 @@ if(userBean.isAdmin())
 				{
 			%>
 			<td><input type="button" onclick="document.forms['mainForm'].elements['action'].value='editUser';document.forms['mainForm'].elements['userId'].value='<%= rs.getString("userId") %>';document.forms['mainForm'].submit();" value="Edit"/></td>
-			<td><input type="button" onclick="if(confirm('Are you sure you want to delete this user?')){document.forms['mainForm'].elements['action'].value='deleteUser';document.forms['mainForm'].elements['userId'].value='<%= rs.getString("userId") %>';document.forms['mainForm'].submit();}" value="Delete"/></td>
+			<td><input type="button" onclick="if(confirm('Are you sure you want to delete this user?')){document.forms['mainForm'].elements['action'].value='deleteUserSubmit';document.forms['mainForm'].elements['userId'].value='<%= rs.getString("userId") %>';document.forms['mainForm'].submit();}" value="Delete"/></td>
 			<%
 				}
 			%>
