@@ -106,7 +106,7 @@ public class RouterBean {
 //			if (!newUser.userExists()) { //NO TIME TO IMPLEMENT
 			if (!newUser.updateRecord()) {
 					// ERROR
-					System.out.println("Error in updateRecord");
+					System.out.println("Error in RouterBean.updateRecord");
 					user.setAction("editUser");
 				} else {
 					user.setAction("view");
@@ -118,7 +118,7 @@ public class RouterBean {
 			newUser = new UserBean(Integer.parseInt(_request.getParameter("userId")));
 			if (!newUser.deleteRecord()) {
 				// ERROR
-				System.out.println("Error in addRecord");
+				System.out.println("Error in RouterBean.addRecord");
 			} else {
 				user.setAction("view");
 			}
@@ -161,7 +161,7 @@ public class RouterBean {
 //		System.out.println(_request.getParameter("action"));
 		switching(user);
 
-		// On regarde si on est connecté: Si non=>login.jsp, si oui=>admin.jsp ou cart.jsp
+		// On regarde si on est connectï¿½: Si non=>login.jsp, si oui=>admin.jsp ou cart.jsp
 		if(!user.getIsConnected())
 			this._url = "/login.jsp";
 		else {

@@ -130,7 +130,7 @@ public class DBLocalToolbox extends DBToolbox
 	
 	public boolean updateRecord(int id, String name, String login, String password, int rightTypeId)
 	{
-		String query = "UPDATE users SET name='" + name + "', login='" + login + "', password='" + password + "', rightTypesId='" + rightTypeId + "' WHERE id='" + id + "';";
+		String query = "UPDATE users SET name='" + name + "', login='" + login + "', password='" + password + "', rightTypeId='" + rightTypeId + "' WHERE id='" + id + "';";
 		return executeQuery(query);
 	}
 	

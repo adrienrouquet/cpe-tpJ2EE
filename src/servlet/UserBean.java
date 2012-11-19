@@ -129,7 +129,7 @@ public class UserBean
         	setId(Integer.parseInt(id[0]));
     	}
     	
-    	String[] rightTypeId = userMap.get("userId");
+    	String[] rightTypeId = userMap.get("rightTypeId");
     	if (rightTypeId == null)
     	{
     		setRightTypeId(0);

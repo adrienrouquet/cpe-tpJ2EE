@@ -35,24 +35,29 @@ if(userBean.isAdmin())
 			{
 	%>
 		<tr>
-			<td><%= rs.getString("userName") %></td>
 			<% if(userBean.getAction().equals("editUser"))
 				{
 					if( rs.getString("userId").equals(request.getParameter("userId")))
 					{
 			%>
+						<td><input type="text" name="userName" value="<%= rs.getString("userName") %>" /></td>
 						<td><input type="text" name="login" value="<%= rs.getString("login") %>" /></td>
 						<td><input type="text" name="password" value="<%= rs.getString("password") %>" /></td>
 						<td>
-							<select name="rightTypeId" value="<%= rs.getString("rightTypeId") %>" />
+							<select name="rightTypeId" />
 							<%
 								ResultSet rs2 = rightTypeBean.getRightTypes();
 								if(rs2 != null)
 								{
 									do
 									{
+										String selected = "";
+										if(rs.getString("rightTypeId").equals(rs2.getString("id")))
+										{
+											selected = "SELECTED";
+										}
 							%>
-								<option value="<%=rs2.getString("id") %>"><%= rs2.getString("name") %></option>
+								<option <%= selected %> value="<%=rs2.getString("id").toString() %>" ><%= rs2.getString("name") %></option>
 							<%
 									}while(rs2.next());
 								}
@@ -63,6 +68,7 @@ if(userBean.isAdmin())
 					else
 					{
 			%>
+						<td><%= rs.getString("userName") %></td>
 						<td><%= rs.getString("login") %></td>
 						<td><%= rs.getString("password") %></td>
 						<td><%= rs.getString("rightTypeName") %></td>
@@ -72,6 +78,7 @@ if(userBean.isAdmin())
 				else
 				{
 			%>
+			<td><%= rs.getString("userName") %></td>
 			<td><%= rs.getString("rightTypeName") %></td>
 			<%  
 				}
