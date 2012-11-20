@@ -31,6 +31,8 @@ public class RouterBean {
 		_actions.add("deleteUserSubmit");
 		_actions.add("login");
 		_actions.add("logout");
+		_actions.add("editPassword");
+		_actions.add("editPasswordSubmit");
 	}
 	
 	private HttpSession _session;
