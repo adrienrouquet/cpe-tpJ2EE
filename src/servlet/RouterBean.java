@@ -93,6 +93,7 @@ public class RouterBean {
 			if (!newUser.userExists()) {
 				if(!newUser.addRecord()) {
 					// ERROR
+					System.out.println("Error in RouterBean.addRecord");
 				} else {
 					user.setAction("view");
 				}
@@ -129,8 +130,7 @@ public class RouterBean {
 			{
 				user.setIsConnected(true);
 				_session.setAttribute("userBean", user);
-				user.setAction("view");
-				
+				user.setAction("view");				
 			}
 			break;
 		case 7: //logout

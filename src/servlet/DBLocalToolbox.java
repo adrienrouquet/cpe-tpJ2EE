@@ -124,13 +124,13 @@ public class DBLocalToolbox extends DBToolbox
 	
 	public boolean createRecord(String name, String login, String password, int rightTypeId)
 	{
-		String query = "INSERT INTO users VALUES ('" + name + "','" + login + "','" + password + "','" + rightTypeId + "');";
+		String query = "INSERT INTO users(name, login, password, rightTypeId) VALUES ('" + name + "','" + login + "','" + password + "','" + rightTypeId + "');";
 		return executeQuery(query);
 	}
 	
-	public boolean updateRecord(int id, String name, String login, String password, int rightTypeId)
+	public boolean updateRecord(int id, String name, String login, int rightTypeId)
 	{
-		String query = "UPDATE users SET name='" + name + "', login='" + login + "', password='" + password + "', rightTypeId='" + rightTypeId + "' WHERE id='" + id + "';";
+		String query = "UPDATE users SET name='" + name + "', login='" + login + "', rightTypeId='" + rightTypeId + "' WHERE id='" + id + "';";
 		return executeQuery(query);
 	}
 	
@@ -184,8 +184,9 @@ public class DBLocalToolbox extends DBToolbox
 	{
 		try
 		{
-			if (rs != null)
+			if (rs != null && rs.next())
 			{
+				rs.first();
 				do 
 				{
 					return true;
@@ -195,7 +196,7 @@ public class DBLocalToolbox extends DBToolbox
 		catch (SQLException e)
 		{
 			System.err.println("Error in DBLocalToolbox.hasResult: " + e.getMessage());
-		}		
+		}	
 		return false;
 	}
 	

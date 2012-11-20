@@ -4,31 +4,27 @@
 <jsp:useBean id="rightTypeBean" class="servlet.RightTypeBean" scope="session" />
 <jsp:useBean id="adminBean" class="servlet.AdminBean" scope="session" />
 
-<h2>Administration Panel:</h2>
-<%
-if(userBean.isUserAdmin())
-{
-%>
-	<p> Welcome <jsp:getProperty name="userBean" property="name" /> </p>
-	<form name="mainForm" method="post" action="OnlineStore">
-	Vous etes maintenant connecte
-	<input type="hidden" name="action" value="logout">
-	<input type="submit" value="Logout">
-	</form>
-	
-	<div class="adminMenu" style="margin-left: 5%; margin-right: 5%;  border-color: rgb(128,128,128); border-style: solid; background: rgb(220,220,220); width: 90%;">
 	Add new User:
 	<form name="mainForm" action="OnlineStore" method="post">
 	<input type="hidden" name="action" value="" />
-	<br>Name:<input type="text" name="name" value="" />
+	<br>Name:<input type="text" name="userName" value="" />
+	<br>Login:<input type="text" name="login" value="" />
+	<br>Password:<input type="text" name="password" value="" />
+	<br><select name="rightTypeId" />
+	<%
+		ResultSet rs = rightTypeBean.getRightTypes();
+		if(rs != null)
+		{
+			do
+			{
+				
+	%>
+		<option value="<%=rs.getString("id").toString() %>" ><%= rs.getString("name") %></option>
+	<%
+			}while(rs.next());
+		}
+	%>
+	</select>
+	<br><input type="button" onclick="document.forms['mainForm'].elements['action'].value='addUserSubmit';document.forms['mainForm'].submit();" value="Add"/>
+	<br><input type="button" onclick="document.forms['mainForm'].elements['action'].value='view';document.forms['mainForm'].submit();" value="Cancel"/>
 	</form>
-	</div>
-<%
-}
-else
-{
-%>
-	YOU ARE NOT AN ADMIN, GET OUTTA HERE BITCH!
-<%
-}
-%>

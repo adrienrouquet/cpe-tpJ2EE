@@ -12,8 +12,11 @@ if(userBean.isAdmin())
 <% 
 	String action 	= userBean.getAction();
 	Boolean edit 	= false;
+	Boolean add		= false;
 	if(action.equals("editUser"))
 		edit = true;
+	if(action.equals("addUser"))
+		add = true;
 	
 %>
 	<p> Welcome <jsp:getProperty name="userBean" property="name" /> </p>
@@ -22,6 +25,16 @@ if(userBean.isAdmin())
 	<input type="button" value="Logout" onclick="document.forms['mainForm'].elements['action'].value='logout';document.forms['mainForm'].submit();">
 	
 	<div class="adminMenu" style="margin-left: 5%; margin-right: 5%;  border-color: rgb(128,128,128); border-style: solid; background: rgb(220,220,220); width: 90%;">
+<% 
+	if(add) 
+	{
+%>
+	<jsp:include page="/subscribe.jsp" />
+<%
+	}
+	else
+	{
+%>
 
 	Users:
 	<input type="hidden" name="action" value="" />
@@ -48,7 +61,6 @@ if(userBean.isAdmin())
 			%>
 						<td><input type="text" name="userName" value="<%= rs.getString("userName") %>" /></td>
 						<td><input type="text" name="login" value="<%= rs.getString("login") %>" /></td>
-						<td><input type="text" name="password" value="<%= rs.getString("password") %>" /></td>
 						<td>
 							<select name="rightTypeId" />
 							<%
@@ -76,7 +88,6 @@ if(userBean.isAdmin())
 			%>
 						<td><%= rs.getString("userName") %></td>
 						<td><%= rs.getString("login") %></td>
-						<td><%= rs.getString("password") %></td>
 						<td><%= rs.getString("rightTypeName") %></td>
 			<%		
 					}
@@ -110,6 +121,11 @@ if(userBean.isAdmin())
 		}
 	%>
 	</table>
+	<br><span style="text-align: left;"></span><input type="button" onclick="document.forms['mainForm'].elements['action'].value='addUser';document.forms['mainForm'].submit();" value="Add User"/></span>
+		
+<%
+	}
+%>
 	</div>
 <%
 }

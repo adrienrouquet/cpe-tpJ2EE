@@ -1,8 +1,13 @@
 package servlet;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
+
+import sun.misc.BASE64Encoder;
 
 public class UserBean
 {
@@ -38,8 +43,27 @@ public class UserBean
 	public String getPassword() {
 		return _password;
 	}
-	public void setPassword(String password) {
-		this._password = password;
+	public void setPassword(String password, Boolean notEncrypted) {
+		if(notEncrypted)
+		{
+			MessageDigest md = null;
+			try {
+				md = MessageDigest.getInstance("SHA");
+			} catch (NoSuchAlgorithmException e) {
+				System.out.println("Error in UserBean.setPassword " + e.getMessage());
+			}
+			try {
+				md.update(password.getBytes("UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				System.out.println("Error in UserBean.setPassword " + e.getMessage());
+			}
+			byte digest[] = md.digest();
+			this._password = (new BASE64Encoder()).encode(digest);
+		}
+		else
+		{
+			this._password = password;
+		}
 	}
 	
 	public int getRightTypeId() {
@@ -79,7 +103,7 @@ public class UserBean
     	super();
     	
     	setName(name);
-    	setPassword(password);
+    	setPassword(password,true);
     }
 	
     public boolean isValid()
@@ -100,7 +124,8 @@ public class UserBean
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	
     	result = ltb.userExists(this._login);
-    	
+    	if(result)
+    		System.out.println("Error in UserBean.userExists: User already exists");
     	ltb.closeConn();
     	
     	return result;	
@@ -150,7 +175,7 @@ public class UserBean
     	
     	String[] password = userMap.get("password");
     	if(password != null)
-    		setPassword(password[0]);
+    		setPassword(password[0],true);
     }
     
     public boolean getRecord()
@@ -182,7 +207,7 @@ public class UserBean
     			setId(Integer.parseInt( rs.getString("id")));
     			setName(rs.getString("name"));
                 setLogin(rs.getString("login"));
-                setPassword(rs.getString("password"));
+                setPassword(rs.getString("password"),false);
                 setRightTypeId(Integer.parseInt( rs.getString("rightTypeId")));
     		}while (rs.next());  
     		ltb.closeConn();
@@ -198,7 +223,7 @@ public class UserBean
     public boolean addRecord()
     {    	
     	DBLocalToolbox ltb = new DBLocalToolbox();
-    	if(this._id != 0 && this._name != "" && this._login != "" && this._password != "" && this._rightTypeId != 0)
+    	if(this._name != "" && this._login != "" && this._password != "" && this._rightTypeId != 0)
     	{
     		if(ltb.createRecord(this._name, this._login, this._password, this._rightTypeId))
     		{
@@ -215,9 +240,9 @@ public class UserBean
     	boolean done = false;
     	
     	DBLocalToolbox ltb = new DBLocalToolbox();
-    	if(this._id != 0 && this._name != "" && this._login != "" && this._password != "" && this._rightTypeId != 0)
+    	if(this._id != 0 && this._name != "" && this._login != "" && this._rightTypeId != 0)
     	{
-    		done = ltb.updateRecord(this._id, this._name, this._login, this._password, this._rightTypeId);
+    		done = ltb.updateRecord(this._id, this._name, this._login, this._rightTypeId);
     	}
     	
     	ltb.closeConn();
