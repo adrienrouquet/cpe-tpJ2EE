@@ -61,6 +61,7 @@ public class UserBean
 	}
 	public void setAction(String action) {
 		this._action = action;
+		System.out.println("SETACTION: //" + action + "");
 	}
 	
     public UserBean()

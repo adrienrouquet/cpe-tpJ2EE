@@ -9,7 +9,13 @@
 if(userBean.isAdmin())
 {
 %>
-<%= userBean.getAction() %>
+<% 
+	String action 	= userBean.getAction();
+	Boolean edit 	= false;
+	if(action.equals("editUser"))
+		edit = true;
+	
+%>
 	<p> Welcome <jsp:getProperty name="userBean" property="name" /> </p>
 	<form name="mainForm" method="post" action="OnlineStore">
 	Vous etes maintenant connecte
@@ -35,7 +41,7 @@ if(userBean.isAdmin())
 			{
 	%>
 		<tr>
-			<% if(userBean.getAction().equals("editUser"))
+			<% if(edit)
 				{
 					if( rs.getString("userId").equals(request.getParameter("userId")))
 					{
@@ -83,7 +89,7 @@ if(userBean.isAdmin())
 			<%  
 				}
 				
-				if(userBean.getAction().equals("editUser") && rs.getString("userId").equals(request.getParameter("userId")))
+				if(edit && rs.getString("userId").equals(request.getParameter("userId")))
 				{	
 			%>
 			<td><input type="button" onclick="document.forms['mainForm'].elements['action'].value='editUserSubmit';document.forms['mainForm'].elements['userId'].value='<%= rs.getString("userId") %>';document.forms['mainForm'].submit();" value="Save"/></td>

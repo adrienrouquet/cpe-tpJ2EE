@@ -79,7 +79,6 @@ public class RouterBean {
 		int actionNb = _actions.indexOf(action);
 		if (actionNb >= 0) {
 			user.setAction(action);
-			System.out.println("SWITCHING: case " + actionNb + ": //" + action + "");
 		} else {
 			actionNb = -1;
 		}
