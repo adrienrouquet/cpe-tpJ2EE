@@ -132,7 +132,8 @@ public class RouterBean {
 			{
 				user.setIsConnected(true);
 				_session.setAttribute("userBean", user);
-				user.setAction("view");				
+				_session.setAttribute("cartBean", new CartBean());
+				user.setAction("view");
 			}
 			break;
 		case 7: //logout

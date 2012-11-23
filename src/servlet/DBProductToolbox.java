@@ -28,16 +28,16 @@ public class DBProductToolbox extends DBToolbox
 	}
 	
 	
-	public int getProductQuantity(int productId)
+	public int getStockQuantity(int productId)
 	{		
-		String query = "SELECT productQuantity FROM productStocks WHERE productId='" + productId + "';";
+		String query = "SELECT stockQuantity FROM productStocks WHERE productId='" + productId + "';";
 		try
 		{
 			ResultSet rs = getResult(query);			
 			if (hasResult(rs))
 				{
 					rs.first();
-					return Integer.parseInt(rs.getString("productQuantity"));
+					return Integer.parseInt(rs.getString("stockQuantity"));
 				}
 		}
 		catch (SQLException e)

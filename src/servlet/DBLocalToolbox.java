@@ -140,6 +140,25 @@ public class DBLocalToolbox extends DBToolbox
 		return null;
 	}
 	
+	public ResultSet getProductIds()
+	{
+		String query = "SELECT p.id as 'productId' from products as p;";
+		try
+		{
+			ResultSet rs = getResult(query);
+			if (hasResult(rs))
+				{
+					rs.first();
+					return rs;
+				}
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Error in DBLocalToolbox.getProducts: " + e.getMessage());
+		}
+		return null;
+	}
+	
 	public ResultSet getUserRecord(String login, String password)
 	{
 		String query = "SELECT * FROM users WHERE login='" + login + "' AND password='" + password + "';";
