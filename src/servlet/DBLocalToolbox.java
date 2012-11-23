@@ -60,7 +60,6 @@ public class DBLocalToolbox extends DBToolbox
 
 	public boolean isAdmin(int id)
 	{
-		boolean result = false;
 		String query = "SELECT rightTypeId FROM users WHERE id='" + id + "';";
 		ResultSet rs = getResult(query);
 		try
@@ -84,7 +83,7 @@ public class DBLocalToolbox extends DBToolbox
 		return false;
 	}
 	
-	public ResultSet getRecord(int id)
+	public ResultSet getUserRecord(int id)
 	{		
 		String query = "SELECT * FROM users WHERE id='" + id + "';";
 		try
@@ -98,12 +97,50 @@ public class DBLocalToolbox extends DBToolbox
 		}
 		catch (SQLException e)
 		{
-			System.err.println("Error in DBLocalToolbox.getRecord: " + e.getMessage());
+			System.err.println("Error in DBLocalToolbox.getUserRecord: " + e.getMessage());
 		}				
 		return null;
 	}
 	
-	public ResultSet getRecord(String login, String password)
+	public ResultSet getProductRecord(int id)
+	{		
+		String query = "SELECT * FROM products WHERE id='" + id + "';";
+		try
+		{
+			ResultSet rs = getResult(query);			
+			if (hasResult(rs))
+				{
+					rs.first();
+					return rs;
+				}
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Error in DBLocalToolbox.getProductRecord: " + e.getMessage());
+		}				
+		return null;
+	}
+	
+	public ResultSet getProducts()
+	{
+		String query = "SELECT p.id as 'productId', p.name as 'productName', p.description as 'description', p.price as 'price', p.ImgUrl as 'imgUrl' from products as p;";
+		try
+		{
+			ResultSet rs = getResult(query);
+			if (hasResult(rs))
+				{
+					rs.first();
+					return rs;
+				}
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Error in DBLocalToolbox.getProducts: " + e.getMessage());
+		}
+		return null;
+	}
+	
+	public ResultSet getUserRecord(String login, String password)
 	{
 		String query = "SELECT * FROM users WHERE login='" + login + "' AND password='" + password + "';";
 		try
@@ -117,24 +154,24 @@ public class DBLocalToolbox extends DBToolbox
 		}
 		catch (SQLException e)
 		{
-			System.err.println("Error in DBLocalToolbox.getRecord: " + e.getMessage());
+			System.err.println("Error in DBLocalToolbox.getUserRecord: " + e.getMessage());
 		}				
 		return null;
 	}
 	
-	public boolean createRecord(String name, String login, String password, int rightTypeId)
+	public boolean createUserRecord(String name, String login, String password, int rightTypeId)
 	{
 		String query = "INSERT INTO users(name, login, password, rightTypeId) VALUES ('" + name + "','" + login + "','" + password + "','" + rightTypeId + "');";
 		return executeQuery(query);
 	}
 	
-	public boolean updateRecord(int id, String name, String login, int rightTypeId)
+	public boolean updateUserRecord(int id, String name, String login, int rightTypeId)
 	{
 		String query = "UPDATE users SET name='" + name + "', login='" + login + "', rightTypeId='" + rightTypeId + "' WHERE id='" + id + "';";
 		return executeQuery(query);
 	}
 	
-	public boolean deleteRecord(int id)
+	public boolean deleteUserRecord(int id)
 	{
 		String query = "DELETE FROM users WHERE id='" + id + "';";
 		return executeQuery(query);
@@ -159,7 +196,7 @@ public class DBLocalToolbox extends DBToolbox
 		return null;
 	}
 	
-	public ResultSet getRightTypes()
+	public ResultSet getUserRightTypes()
 	{
 		String query = "SELECT * FROM rightTypes;";		
 		try
@@ -174,7 +211,7 @@ public class DBLocalToolbox extends DBToolbox
 		}
 		catch (SQLException e)
 		{
-			System.err.println("Error in DBLocalToolbox.getRightTypes: " + e.getMessage());
+			System.err.println("Error in DBLocalToolbox.getUserRightTypes: " + e.getMessage());
 		}
 		
 		return null;

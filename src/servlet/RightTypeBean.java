@@ -25,7 +25,7 @@ public class RightTypeBean
     public ResultSet getRightTypes()
     {
     	DBLocalToolbox ltb = new DBLocalToolbox();
-    	return ltb.getRightTypes();
+    	return ltb.getUserRightTypes();
     }
 	
     

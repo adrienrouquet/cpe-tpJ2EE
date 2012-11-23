@@ -185,11 +185,11 @@ public class UserBean
     	
     	if (this._id >0)
     	{
-    		rs = ltb.getRecord(this._id);
+    		rs = ltb.getUserRecord(this._id);
     	}
     	else if (isValid())
     	{
-    		rs = ltb.getRecord(this._login, this._password);
+    		rs = ltb.getUserRecord(this._login, this._password);
     	}
     	else 
     	{
@@ -225,7 +225,7 @@ public class UserBean
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	if(this._name != "" && this._login != "" && this._password != "" && this._rightTypeId != 0)
     	{
-    		if(ltb.createRecord(this._name, this._login, this._password, this._rightTypeId))
+    		if(ltb.createUserRecord(this._name, this._login, this._password, this._rightTypeId))
     		{
     			ltb.closeConn();
     			return true;
@@ -242,7 +242,7 @@ public class UserBean
     	DBLocalToolbox ltb = new DBLocalToolbox();
     	if(this._id != 0 && this._name != "" && this._login != "" && this._rightTypeId != 0)
     	{
-    		done = ltb.updateRecord(this._id, this._name, this._login, this._rightTypeId);
+    		done = ltb.updateUserRecord(this._id, this._name, this._login, this._rightTypeId);
     	}
     	
     	ltb.closeConn();
@@ -255,7 +255,7 @@ public class UserBean
     	boolean done = false;
     	
     	DBLocalToolbox ltb = new DBLocalToolbox();
-    	done = ltb.deleteRecord(this._id);
+    	done = ltb.deleteUserRecord(this._id);
     	
     	ltb.closeConn();
     	
