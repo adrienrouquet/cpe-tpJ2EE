@@ -22,31 +22,36 @@
 					{
 						do
 						{
+							int rsProductId = Integer.parseInt(rs.getString("productId"));
+							String rsProductName = rs.getString("productName");
+							int rsProductQty = cartBean.getQuantity(rsProductId);
+							int rsStockQuantity = cartBean.getStockQuantity(rsProductId);
+							int rsDelay = cartBean.getDelay(rsProductId);
 					%>
 						<tr>
-							<td><%= rs.getString("productName") %></td>
+							<td><%= rsProductName %></td>
 						<tr>
 							<td><%= rs.getString("description") %></td>
 							<td><%= rs.getString("price") %></td>
 							<td>
 							<%  
-								if(cartBean.getStockQuantity(Integer.parseInt(rs.getString("productId"))) == 0)
+								
+								if( rsStockQuantity == 0)
 								{
-									out.println("Dispo dans: "+cartBean.getDelay(Integer.parseInt(rs.getString("productId")))+" jours");
+									out.println("Dispo dans: "+rsDelay+" jours");
 								}
 								else
 								{
 									
 							%>
-									<select name="productQuantity_<%= rs.getString("productId") %>" onchange="document.forms['mainForm'].elements['action'].value='editCartSubmit';document.forms['mainForm'].elements['productQuantity'].value=this.value;document.forms['mainForm'].elements['productId'].value='<%= rs.getString("productId") %>';document.forms['mainForm'].submit();">
+									<select name="productQuantity_<%= rsProductId %>" onchange="document.forms['mainForm'].elements['action'].value='editCartSubmit';document.forms['mainForm'].elements['productQuantity'].value=this.value;document.forms['mainForm'].elements['productId'].value='<%= rsProductId %>';document.forms['mainForm'].submit();">
 									
 								<%
-									int productQty = cartBean.getQuantity(Integer.parseInt(rs.getString("productId")));
 									String selected = "";
-									for(int i=0;i<=cartBean.getStockQuantity(Integer.parseInt(rs.getString("productId")));i++)
+									for(int i=0;i<=rsStockQuantity;i++)
 									{
 										selected = "";
-										if( i == productQty)
+										if( i == rsProductQty)
 											selected = "selected";
 								%>
 										<option value="<%= i %>" <%= selected %>> <%= i %> </option>
@@ -106,7 +111,7 @@
 				</td>
 			</tr>
 		</table>
-	<br><span style="text-align: left;"></span><input type="button" onclick="document.forms['mainForm'].elements['action'].value='addUser';document.forms['mainForm'].submit();" value="Add User"/></span>
+	<br>
 
 	</div>
 	</form>
