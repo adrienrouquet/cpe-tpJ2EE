@@ -12,12 +12,7 @@ public class CartBean {
 	private Map<Integer, Integer> _productMap = new HashMap<Integer, Integer>();
 	private DBLocalToolbox _ltb = new DBLocalToolbox();
 	private DBProductToolbox _ptb = new DBProductToolbox();
-	
-	public CartBean()
-	{
-		initializeMap();
-	}
-	
+		
 	 public void finalize()
      {
           _ltb.closeConn();   
@@ -26,25 +21,6 @@ public class CartBean {
 	
 	public Map<Integer, Integer> getMapProduct() {
 		return _productMap;
-	}
-	
-	public void initializeMap()
-	{		
-		ResultSet rs = _ltb.getProductIds();
-		if(rs != null)
-		{
-			try {
-				rs.first();			
-				do{
-						_productMap.put(Integer.parseInt(rs.getString("productId")), 0);
-				}while(rs.next());
-			}
-			catch (Exception e)
-			{
-				System.err.println("Error in CartBean.initializeMap: " + e.getMessage());
-			}
-				
-		}
 	}
 	
 	public ResultSet getProducts()
@@ -57,9 +33,16 @@ public class CartBean {
 		return _ltb.getProductRecord(productId);
     }
 	
+	public int getDelay(int productId)
+    {
+		return _ptb.getDelay(productId);
+    }
+	
 	public Integer getQuantity(int productId)
     {
-		return _productMap.get(productId);	
+		if(_productMap.get(productId) == null)
+			return 0;
+		return _productMap.get(productId);
     }
 	
 	public Integer getStockQuantity(int productId)
@@ -68,11 +51,16 @@ public class CartBean {
     }
 
 	public void updateCart(int id, int quantity) {		
-		if (quantity == 0) {
-			deleteFromCart(id);
-			return;
+		if(id != 0)
+		{
+			if (quantity == 0) {
+				deleteFromCart(id);
+				return;
+			}
+			this._productMap.put(id, quantity);
 		}
-		this._productMap.put(id, quantity);
+		else
+			System.out.println("Error in CartBean.updateCart: productId is null");
 	}
 	
 	public void deleteFromCart(int id) {

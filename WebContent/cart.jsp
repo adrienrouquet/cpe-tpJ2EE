@@ -6,6 +6,8 @@
 	<p> Welcome <jsp:getProperty name="userBean" property="name" /> </p>
 	<form name="mainForm" method="post" action="OnlineStore">
 	<input type="hidden" name="action" value="" />
+	<input type="hidden" name="productId" value="0" />
+	<input type="hidden" name="productQuantity" value="0" />
 	<input type="button" value="Logout" onclick="document.forms['mainForm'].elements['action'].value='logout';document.forms['mainForm'].submit();">
 	
 
@@ -27,22 +29,34 @@
 							<td><%= rs.getString("description") %></td>
 							<td><%= rs.getString("price") %></td>
 							<td>
-								<select name="quantity<%= rs.getString("productId") %>" onchange="document.forms['mainForm'].elements['action'].value='editCartSubmit';document.forms['mainForm'].submit();">
-								
-							<%
-								int productQty = cartBean.getQuantity(Integer.parseInt(rs.getString("productId")));
-								String selected = "";
-								for(int i=0;i<=cartBean.getStockQuantity(Integer.parseInt(rs.getString("productId")));i++)
-								{ 
-									selected = "";
-									if( i == productQty)
-										selected = "selected";
+							<%  
+								if(cartBean.getStockQuantity(Integer.parseInt(rs.getString("productId"))) == 0)
+								{
+									out.println("Dispo dans: "+cartBean.getDelay(Integer.parseInt(rs.getString("productId")))+" jours");
+								}
+								else
+								{
+									
 							%>
-									<option value="<%= i %>" <%= selected %>> <%= i %> </option>
-							<%		
+									<select name="productQuantity_<%= rs.getString("productId") %>" onchange="document.forms['mainForm'].elements['action'].value='editCartSubmit';document.forms['mainForm'].elements['productQuantity'].value=this.value;document.forms['mainForm'].elements['productId'].value='<%= rs.getString("productId") %>';document.forms['mainForm'].submit();">
+									
+								<%
+									int productQty = cartBean.getQuantity(Integer.parseInt(rs.getString("productId")));
+									String selected = "";
+									for(int i=0;i<=cartBean.getStockQuantity(Integer.parseInt(rs.getString("productId")));i++)
+									{
+										selected = "";
+										if( i == productQty)
+											selected = "selected";
+								%>
+										<option value="<%= i %>" <%= selected %>> <%= i %> </option>
+								<%		
+									}
+								%>
+									</select>
+							<%
 								}
 							%>
-								</select>
 							</td>
 						</tr>
 					<%

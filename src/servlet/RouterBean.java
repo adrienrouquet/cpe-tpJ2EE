@@ -148,7 +148,9 @@ public class RouterBean {
 			break;
 		case 10: //editCartSubmit
 			System.out.println("SWITCHING: case 10: //editCartSubmit");
-			
+			CartBean cart = (CartBean) _session.getAttribute("cartBean");
+			cart.updateCart(Integer.parseInt(_request.getParameter("productId")), Integer.parseInt(_request.getParameter("productQuantity")));
+			user.setAction("view");
 			break;
 		default:
 			break;

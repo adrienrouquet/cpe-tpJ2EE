@@ -42,7 +42,26 @@ public class DBProductToolbox extends DBToolbox
 		}
 		catch (SQLException e)
 		{
-			System.err.println("Error in DBProductToolbox.getRecord: " + e.getMessage());
+			System.err.println("Error in DBProductToolbox.getStockQuantity: " + e.getMessage());
+		}
+		return 0;
+	}
+	
+	public int getDelay(int productId)
+	{		
+		String query = "SELECT delay FROM productStocks WHERE productId='" + productId + "';";
+		try
+		{
+			ResultSet rs = getResult(query);			
+			if (hasResult(rs))
+				{
+					rs.first();
+					return Integer.parseInt(rs.getString("delay"));
+				}
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Error in DBProductToolbox.getDelay: " + e.getMessage());
 		}
 		return 0;
 	}
