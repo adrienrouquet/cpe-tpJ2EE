@@ -1,5 +1,4 @@
 <%@page import="java.sql.ResultSet"%>
-<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <jsp:useBean id="userBean" class="servlet.UserBean" scope="session" />
 <jsp:useBean id="rightTypeBean" class="servlet.RightTypeBean" scope="session" />
 <jsp:useBean id="adminBean" class="servlet.AdminBean" scope="session" />
