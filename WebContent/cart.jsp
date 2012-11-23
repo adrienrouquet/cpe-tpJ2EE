@@ -1,5 +1,4 @@
 <%@page import="java.sql.ResultSet"%>
-<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <jsp:useBean id="userBean" class="servlet.UserBean" scope="session" />
 <jsp:useBean id="cartBean" class ="servlet.CartBean" scope="session" />
 
@@ -8,12 +7,12 @@
 	<form name="mainForm" method="post" action="OnlineStore">
 	<input type="hidden" name="action" value="" />
 	<input type="button" value="Logout" onclick="document.forms['mainForm'].elements['action'].value='logout';document.forms['mainForm'].submit();">
-	</form>
+	
 
 	<div class="userMenu" style="margin-left: 5%; margin-right: 5%;  background: rgb(220,220,220); width: 90%;">
 		<table class="cartTable">
 			<tr>
-				<td style="border-color: rgb(180,180,180); border-style: solid; background: rgb(240,240,240); width: 70%;">
+				<td style="border-color: rgb(180,180,180); border-style: solid; background: rgb(240,240,240); width: 80%;">
 					<table>
 					<%
 					ResultSet rs = cartBean.getProducts();
@@ -28,7 +27,7 @@
 							<td><%= rs.getString("description") %></td>
 							<td><%= rs.getString("price") %></td>
 							<td>
-								<select name="quantity<%= rs.getString("productId") %>">
+								<select name="quantity<%= rs.getString("productId") %>" onchange="document.forms['mainForm'].elements['action'].value='editCartSubmit';document.forms['mainForm'].submit();">
 								
 							<%
 								int productQty = cartBean.getQuantity(Integer.parseInt(rs.getString("productId")));
@@ -52,7 +51,7 @@
 					%>
 					</table>	
 				</td>
-				<td style="border-color: rgb(180,180,180); border-style: solid; background: rgb(240,240,240); width: 30%;">
+				<td style="border-color: rgb(180,180,180); border-style: solid; background: rgb(240,240,240); width: 20%;">
 					<table>
 					
 					<%
@@ -96,3 +95,4 @@
 	<br><span style="text-align: left;"></span><input type="button" onclick="document.forms['mainForm'].elements['action'].value='addUser';document.forms['mainForm'].submit();" value="Add User"/></span>
 
 	</div>
+	</form>

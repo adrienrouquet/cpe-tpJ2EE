@@ -33,6 +33,8 @@ public class RouterBean {
 		_actions.add("logout");
 		_actions.add("editPassword");
 		_actions.add("editPasswordSubmit");
+		_actions.add("editCartSubmit");
+		
 	}
 	
 	private HttpSession _session;
@@ -143,6 +145,10 @@ public class RouterBean {
 			//Reloading the session and user parameters in case we got logged out
 			_session = _request.getSession(true);
 			user = loadUser();
+			break;
+		case 10: //editCartSubmit
+			System.out.println("SWITCHING: case 10: //editCartSubmit");
+			
 			break;
 		default:
 			break;
