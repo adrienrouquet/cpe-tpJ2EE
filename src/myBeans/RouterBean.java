@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import myBeans.CartBean;
+import myBeans.UserBean;
+
 public class RouterBean {
 
 	private HttpServletRequest _request;
@@ -144,6 +147,7 @@ public class RouterBean {
 			//Reloading the session and user parameters in case we got logged out
 			_session = _request.getSession(true);
 			user = loadUser();
+			_url = "/login.jsp";
 			break;
 		case 10: //editCartSubmit
 			System.out.println("SWITCHING: case 10: //editCartSubmit");
@@ -169,7 +173,10 @@ public class RouterBean {
 		UserBean user = loadUser();
 //		System.out.println(_request.getParameter("action"));
 		switching(user);
-
+		
+		//Reloading user in case of a logout
+		user = loadUser();
+		
 		// On regarde si on est connect�: Si non=>login.jsp, si oui=>admin.jsp ou cart.jsp
 		if(!user.getIsConnected())
 			this._url = "/login.jsp";
