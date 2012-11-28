@@ -1,4 +1,4 @@
-package dbPackage;
+package myDBPackage;
 
 public abstract class DBToolbox
 {

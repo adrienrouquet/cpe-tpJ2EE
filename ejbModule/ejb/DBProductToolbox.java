@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import javax.ejb.Stateless;
 
-import dbPackage.*;
+import myDBPackage.*;
 
 /**
  * Session Bean implementation class DBProductToolbox
