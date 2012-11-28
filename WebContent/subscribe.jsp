@@ -1,7 +1,7 @@
 <%@page import="java.sql.ResultSet"%>
-<jsp:useBean id="userBean" class="servlet.UserBean" scope="session" />
-<jsp:useBean id="rightTypeBean" class="servlet.RightTypeBean" scope="session" />
-<jsp:useBean id="adminBean" class="servlet.AdminBean" scope="session" />
+<jsp:useBean id="userBean" class="myBeans.UserBean" scope="session" />
+<jsp:useBean id="rightTypeBean" class="myBeans.RightTypeBean" scope="session" />
+<jsp:useBean id="adminBean" class="myBeans.AdminBean" scope="session" />
 
 	Add new User:
 	<form name="mainForm" action="OnlineStore" method="post">

@@ -1,4 +1,4 @@
-package servlet;
+package myDBPackage;
 
 public abstract class DBToolbox
 {

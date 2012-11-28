@@ -1,4 +1,4 @@
-package servlet;
+package myBeans;
 
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import myClasses.DBLocalToolbox;
 
 import ejb.DBProductToolboxRemote;
 

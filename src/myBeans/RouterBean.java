@@ -1,4 +1,4 @@
-package servlet;
+package myBeans;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class RouterBean {
 

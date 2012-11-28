@@ -1,4 +1,4 @@
-package servlet;
+package myDBPackage;
 
 import java.sql.ResultSet;
 import java.util.Properties;
@@ -20,13 +20,8 @@ public class DBHandler{
 	    _connectionProps.put("password", "tpJ2EEPass");
 	   
 	    try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			System.err.println("Error in DBHandler constructor: " + e.getMessage());
-		}
-	    try {
 	    	
-			_conn = java.sql.DriverManager.getConnection("jdbc:mysql://82.67.37.180:80/"+_dbName, _connectionProps);
+			_conn = DBDriver.getConnection("jdbc:mysql://82.67.37.180:80/"+_dbName, _connectionProps);
 		} catch (Exception e) {
 			
 			System.err.println("Error in DBHandler constructor: " + e.getMessage());

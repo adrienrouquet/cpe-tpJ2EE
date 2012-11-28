@@ -1,6 +1,7 @@
-package servlet;
+package myBeans;
 
 import java.sql.ResultSet;
+import myClasses.DBLocalToolbox;
 
 public class AdminBean
 {

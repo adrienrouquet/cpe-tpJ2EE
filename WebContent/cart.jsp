@@ -1,6 +1,6 @@
 <%@page import="java.sql.ResultSet"%>
-<jsp:useBean id="userBean" class="servlet.UserBean" scope="session" />
-<jsp:useBean id="cartBean" class ="servlet.CartBean" scope="session" />
+<jsp:useBean id="userBean" class="myBeans.UserBean" scope="session" />
+<jsp:useBean id="cartBean" class ="myBeans.CartBean" scope="session" />
 
 <h2>User Panel</h2>
 	<p> Welcome <jsp:getProperty name="userBean" property="name" /> </p>

@@ -1,7 +1,9 @@
-package servlet;
+package myClasses;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import myDBPackage.*;
 
 public class DBLocalToolbox extends DBToolbox
 {

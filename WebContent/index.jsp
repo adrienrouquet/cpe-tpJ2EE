@@ -5,7 +5,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Les serviettes Souples, votre magasin de serviettes préféré!</title>
-		<jsp:useBean id="routerBean" class="servlet.RouterBean" scope="application" />
+		<jsp:useBean id="routerBean" class="myBeans.RouterBean" scope="application" />
 	</head>
 	<body style="background: rgb(230,230,230); text-align: center;">
 		<% 

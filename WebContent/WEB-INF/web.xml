@@ -13,7 +13,7 @@
     <description></description>
     <display-name>OnlineStore</display-name>
     <servlet-name>OnlineStore</servlet-name>
-    <servlet-class>servlet.OnlineStore</servlet-class>
+    <servlet-class>myServlets.OnlineStore</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>OnlineStore</servlet-name>

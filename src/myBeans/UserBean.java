@@ -1,4 +1,4 @@
-package servlet;
+package myBeans;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -6,6 +6,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
+
+import myClasses.DBLocalToolbox;
 
 import sun.misc.BASE64Encoder;
 
