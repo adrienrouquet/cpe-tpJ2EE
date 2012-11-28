@@ -1,18 +1,30 @@
 package servlet;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import ejb.DBProductToolboxRemote;
 
 public class CartBean {
 	// Map ProductId:Quantity
 	private Map<Integer, Integer> _productMap = new HashMap<Integer, Integer>();
 	private DBLocalToolbox _ltb = new DBLocalToolbox();
-	private DBProductToolbox _ptb = new DBProductToolbox();
-		
+	private DBProductToolboxRemote _ptb = null;
+	
+	private Context cnt = null;
+	
+	public CartBean() throws NamingException
+	{
+		cnt = new InitialContext();
+		_ptb = (DBProductToolboxRemote) cnt.lookup("DBProductToolbox");
+	}
+    
+	
 	 public void finalize()
      {
           _ltb.closeConn();   

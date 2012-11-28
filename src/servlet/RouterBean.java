@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -71,7 +72,7 @@ public class RouterBean {
 		this._error = error;
 	}
 	
-	protected void switching(UserBean user) {
+	protected void switching(UserBean user) throws NamingException {
 		String action = _request.getParameter("action");
 		Map<String, String[]> params = _request.getParameterMap();
 		
@@ -165,7 +166,7 @@ public class RouterBean {
 		return user;
 	}
 	
-	public void routing() {
+	public void routing() throws NamingException {
 		_session = _request.getSession(true);
 		UserBean user = loadUser();
 //		System.out.println(_request.getParameter("action"));

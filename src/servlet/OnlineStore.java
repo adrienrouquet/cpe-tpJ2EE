@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +27,12 @@ public class OnlineStore extends HttpServlet {
 		_router.setRequest(request);
 		_router.setResponse(response);
 		
-		_router.routing();
+		try {
+			_router.routing();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,7 +43,12 @@ public class OnlineStore extends HttpServlet {
 		_router.setRequest(request);
 		_router.setResponse(response);
 		
-		_router.routing();
+		try {
+			_router.routing();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
